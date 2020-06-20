@@ -8,6 +8,7 @@ import {
 import { connect } from 'react-redux';
 import { StyledHome } from './StyledHome';
 import { ARTICLE_CATEGORIES } from '../../enums';
+import { useParams } from 'react-router-dom';
 
 const HomeComponent = props => {
   const {
@@ -16,6 +17,10 @@ const HomeComponent = props => {
     fetchTopArticlesAction,
     locale,
   } = props;
+
+  let { id } = useParams();
+
+  console.log('id', id);
 
   // const query = 'trump';
 
