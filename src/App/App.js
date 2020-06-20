@@ -4,24 +4,42 @@ import {
   Switch,
   Route,
   useHistory,
+  useLocation,
 } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import PageWrapper from './PageWrapper';
 import Home from '../pages/home';
 import { GlobalStyle } from './GlobalStyle';
 import { ThemeProvider } from 'styled-components';
+import { connect } from 'react-redux';
 import theme from '../theme';
 import routes from './routes';
+import { LOCALE } from '../enums';
+import { setLocaleAction } from '../actions/AppActions';
 
-const locale = 'en';
-const query = 'trump';
+const AppComponent = props => {
+  const { locale, setLocaleAction } = props;
 
-const SetLocale = () => {
-  const history = useHistory();
-  history.push(routes.home(locale));
-  return <div></div>;
-};
+  const SetLocale = () => {
+    const history = useHistory();
+    history.push(routes.home(locale));
+    return <></>;
+  };
 
-function App() {
+  const RouteNotFound = () => {
+    const location = useLocation().pathname;
+
+    const providedLocale = location.slice(1, 3);
+
+    /* If valid locale provided different from current locale - update */
+    if (Object.keys(LOCALE).includes(providedLocale)) {
+      console.log('change local to', providedLocale);
+      setLocaleAction(providedLocale);
+    }
+
+    return <h1>Page not found</h1>;
+  };
+
   return (
     <Router>
       <ThemeProvider theme={theme}>
@@ -33,14 +51,29 @@ function App() {
             <Route exact path={routes.homeArticle(locale)} component={Home} />
             {/* <Route exact path={routes.categories(locale)} component={Categories} />
             <Route exact path={routes.search(locale, query)} component={Search} /> */}
-            <Route>
-              <h1>Page not found</h1>
-            </Route>
+            <Route component={RouteNotFound} />
           </Switch>
         </PageWrapper>
       </ThemeProvider>
     </Router>
   );
-}
+};
+
+const mapStateToProps = state => ({
+  locale: state.AppReducer.locale,
+});
+
+const mapDispatchToProps = dispatch => ({
+  setLocaleAction: locale => dispatch(setLocaleAction(locale)),
+});
+
+AppComponent.propTypes = {
+  locale: PropTypes.string.isRequired,
+  setLocaleAction: PropTypes.func.isRequired,
+};
+
+AppComponent.defaultProps = {};
+
+const App = connect(mapStateToProps, mapDispatchToProps)(AppComponent);
 
 export default App;

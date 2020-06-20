@@ -15,6 +15,7 @@ const HomeComponent = props => {
     fetchSearchTopArticlesAction,
     fetchCategoryArticlesAction,
     fetchTopArticlesAction,
+    articles,
     locale,
   } = props;
 
@@ -22,14 +23,14 @@ const HomeComponent = props => {
 
   console.log('id', id);
 
+  useEffect(() => {
+    fetchTopArticlesAction(locale);
+  }, []);
+
   // const query = 'trump';
 
   // useEffect(() => {
   //   fetchSearchTopArticlesAction(locale, query);
-  // }, []);
-
-  // useEffect(() => {
-  //   fetchTopArticlesAction(locale);
   // }, []);
 
   // useEffect(() => {
@@ -46,7 +47,8 @@ const HomeComponent = props => {
 };
 
 const mapStateToProps = state => ({
-  locale: state.ArticlesReducer.locale,
+  locale: state.AppReducer.locale,
+  articles: state.ArticlesReducer.topArticles,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -62,6 +64,7 @@ HomeComponent.propTypes = {
   fetchCategoryArticlesAction: PropTypes.func.isRequired,
   fetchTopArticlesAction: PropTypes.func.isRequired,
   locale: PropTypes.string.isRequired,
+  articles: PropTypes.array.isRequired,
 };
 
 HomeComponent.defaultProps = {};
