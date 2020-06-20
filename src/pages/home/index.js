@@ -1,51 +1,30 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useParams, useHistory } from 'react-router-dom';
-import {
-  fetchSearchTopArticlesAction,
-  fetchCategoryArticlesAction,
-  fetchTopArticlesAction,
-} from '../../actions/ArticlesActions';
+import { fetchTopArticlesAction } from '../../actions/ArticlesActions';
 import { connect } from 'react-redux';
 import { StyledHome } from './StyledHome';
-import { ARTICLE_CATEGORIES } from '../../enums';
 import routes from '../../App/routes';
+import { LOCALE_COUNTRY_NAMES } from '../../enums/Locale';
 
 const HomeComponent = props => {
-  const {
-    fetchSearchTopArticlesAction,
-    fetchCategoryArticlesAction,
-    fetchTopArticlesAction,
-    articles,
-    locale,
-  } = props;
-
-  const history = useHistory();
-
-  let { id } = useParams();
-
-  console.log('id', id);
+  const { fetchTopArticlesAction, articles, locale } = props;
 
   useEffect(() => {
     fetchTopArticlesAction(locale);
-    // history.push(routes.homeArticle(locale, 'asd11'));
   }, []);
 
-  // const query = 'trump';
+  console.log('articles', articles);
 
-  // useEffect(() => {
-  //   fetchSearchTopArticlesAction(locale, query);
-  // }, []);
+  // const history = useHistory();
 
-  // useEffect(() => {
-  //   Object.keys(ARTICLE_CATEGORIES).forEach(category => {
-  //     fetchCategoryArticlesAction(locale, category);
-  //   });
-  // }, []);
+  // let { id } = useParams();
+
+  // console.log('id', id);
 
   return (
     <StyledHome>
-      <h1>Home page</h1>
+      <h1>Top news from {LOCALE_COUNTRY_NAMES[locale]}</h1>
     </StyledHome>
   );
 };
@@ -56,16 +35,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchSearchTopArticlesAction: (country, query) =>
-    dispatch(fetchSearchTopArticlesAction(country, query)),
-  fetchCategoryArticlesAction: (country, category) =>
-    dispatch(fetchCategoryArticlesAction(country, category)),
   fetchTopArticlesAction: country => dispatch(fetchTopArticlesAction(country)),
 });
 
 HomeComponent.propTypes = {
-  fetchSearchTopArticlesAction: PropTypes.func.isRequired,
-  fetchCategoryArticlesAction: PropTypes.func.isRequired,
   fetchTopArticlesAction: PropTypes.func.isRequired,
   locale: PropTypes.string.isRequired,
   articles: PropTypes.array.isRequired,
