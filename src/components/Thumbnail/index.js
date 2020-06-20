@@ -5,7 +5,9 @@ import { StyledThumbnail } from './styledThumbnail';
 import routes from '../../App/routes';
 
 const Thumbnail = props => {
-  const { title, urlToImage, description, locale } = props;
+  const { article, locale } = props;
+
+  const { urlToImage, description, title, id } = article;
 
   return (
     <StyledThumbnail>
@@ -13,23 +15,24 @@ const Thumbnail = props => {
       <img src={urlToImage} alt={title} />
       <span>{description}</span>
       <p>
-        <Link to={routes.homeArticle(locale, title)}>More ...</Link>
+        <Link to={routes.homeArticle(locale, id)}>More ...</Link>
       </p>
     </StyledThumbnail>
   );
 };
 
 Thumbnail.propTypes = {
-  title: PropTypes.string,
-  urlToImage: PropTypes.string,
-  description: PropTypes.string,
+  article: PropTypes.object,
   locale: PropTypes.string.isRequired,
 };
 
 Thumbnail.defaultProps = {
-  title: 'News',
-  urlToImage: '',
-  description: '',
+  article: {
+    title: 'News',
+    urlToImage: '#',
+    description: '',
+    id: '',
+  },
 };
 
 export default Thumbnail;

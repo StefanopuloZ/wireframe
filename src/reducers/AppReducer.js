@@ -3,6 +3,7 @@ import { LOCALE } from '../enums';
 
 const DEFAULT_STATE = {
   locale: LOCALE.gb,
+  loader: 0,
 };
 
 const AppReducer = (state = DEFAULT_STATE, action) => {

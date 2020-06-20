@@ -15,15 +15,21 @@ const RouteNotFoundComponent = props => {
   let redirect = false;
 
   /* If valid locale provided different from current locale - update */
-  if (Object.keys(LOCALE).includes(providedLocale) && providedLocale !== locale) {
-    setTimeout(() => {
-      setLocaleAction(providedLocale);
-    });
+  if (
+    Object.keys(LOCALE).includes(providedLocale) &&
+    providedLocale !== locale
+  ) {
+    setLocaleAction(providedLocale);
     redirect = true;
   }
 
+  console.log('not found', redirect);
+
   return !redirect ? (
-    <h1>Page not found</h1>
+    <>
+      <h1>Page not found</h1>
+      {console.log('page not found')}
+    </>
   ) : (
     <Redirect
       to={{

@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { StyledHome } from './StyledHome';
 import routes from '../../App/routes';
 import { LOCALE_COUNTRY_NAMES } from '../../enums/Locale';
+import Thumbnail from '../../components/Thumbnail';
 
 const HomeComponent = props => {
   const { fetchTopArticlesAction, articles, locale } = props;
@@ -16,6 +17,10 @@ const HomeComponent = props => {
 
   console.log('articles', articles);
 
+  const articlesDisplay = articles.map(article => (
+    <Thumbnail locale={locale} key={article.id} article={article} />
+  ));
+
   // const history = useHistory();
 
   // let { id } = useParams();
@@ -25,6 +30,7 @@ const HomeComponent = props => {
   return (
     <StyledHome>
       <h1>Top news from {LOCALE_COUNTRY_NAMES[locale]}</h1>
+      {articlesDisplay}
     </StyledHome>
   );
 };
