@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useParams, useHistory } from 'react-router-dom';
 import {
   fetchSearchTopArticlesAction,
   fetchCategoryArticlesAction,
@@ -8,7 +9,7 @@ import {
 import { connect } from 'react-redux';
 import { StyledHome } from './StyledHome';
 import { ARTICLE_CATEGORIES } from '../../enums';
-import { useParams } from 'react-router-dom';
+import routes from '../../App/routes';
 
 const HomeComponent = props => {
   const {
@@ -19,12 +20,15 @@ const HomeComponent = props => {
     locale,
   } = props;
 
+  const history = useHistory();
+
   let { id } = useParams();
 
   console.log('id', id);
 
   useEffect(() => {
     fetchTopArticlesAction(locale);
+    // history.push(routes.homeArticle(locale, 'asd11'));
   }, []);
 
   // const query = 'trump';

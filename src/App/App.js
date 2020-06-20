@@ -4,40 +4,25 @@ import {
   Switch,
   Route,
   useHistory,
-  useLocation,
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import PageWrapper from './PageWrapper';
 import Home from '../pages/home';
+import RouteNotFound from './RouteNotFound';
 import { GlobalStyle } from './GlobalStyle';
 import { ThemeProvider } from 'styled-components';
 import { connect } from 'react-redux';
 import theme from '../theme';
 import routes from './routes';
-import { LOCALE } from '../enums';
 import { setLocaleAction } from '../actions/AppActions';
 
 const AppComponent = props => {
-  const { locale, setLocaleAction } = props;
+  const { locale } = props;
 
   const SetLocale = () => {
     const history = useHistory();
     history.push(routes.home(locale));
     return <></>;
-  };
-
-  const RouteNotFound = () => {
-    const location = useLocation().pathname;
-
-    const providedLocale = location.slice(1, 3);
-
-    /* If valid locale provided different from current locale - update */
-    if (Object.keys(LOCALE).includes(providedLocale)) {
-      console.log('change local to', providedLocale);
-      setLocaleAction(providedLocale);
-    }
-
-    return <h1>Page not found</h1>;
   };
 
   return (
