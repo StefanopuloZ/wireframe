@@ -1,12 +1,20 @@
 import { call, put, takeEvery, takeLatest, delay } from 'redux-saga/effects';
 import * as ActionTypes from '../action-types';
-import TestApi from '../apis/testApi';
+import NewsApi from '../apis/newsApi';
 
+const country = 'gb';
+const query = 'trump';
+
+/* searchTopHeadlines */
 export const testSaga = function* testSaga(action) {
   try {
-    const result = yield call(TestApi.testFetch);
+    const result = yield call(NewsApi.searchTopHeadlines, {
+      country,
+      query,
+    });
     console.log('result', result);
-    const user = result.articles[0].source.name;
+    // const user = result.articles[0].source.name;
+    const user = 'qqqqq';
 
     yield put({ type: ActionTypes.TEST_FETCH_SUCCEEDED, user: user });
   } catch (e) {
