@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link, useRouteMatch, useLocation, useHistory } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import { HeaderWrapper } from './styledHeader';
 import { StyledContainer } from '../StyledContainer';
 import routes from '../../App/routes';
@@ -13,25 +13,24 @@ const Header = props => {
   const location = useLocation().pathname;
   const history = useHistory();
 
+  const canChangeLocale = !location.includes('article');
+
   const changeLocale = newLocale => {
-    const newRoute = location.replace(`/${locale}`, `/${newLocale}`);
-    history.push(newRoute);
+    if (canChangeLocale) {
+      const newRoute = location.replace(`/${locale}`, `/${newLocale}`);
+      history.push(newRoute);
+    }
   };
-
-  // let { path, url } = useRouteMatch();
-
-  // console.log('path', path, 'url', url);
-
-  const canChangeLocale = location.includes('article');
-  // console.log('location', location, canChangeLocale);
 
   return (
     <HeaderWrapper>
       <StyledContainer>
         <div>
-          Routing: <Link to={routes.home(locale)}>News</Link>
+          <p><Link to={routes.home(locale)}>Top News</Link></p>
+          <p><Link to={routes.categories(locale)}>Categories</Link></p>
+          <p><Link to={routes.search(locale)}>Search</Link></p>
         </div>
-        <div>
+        <div style={{color: `${canChangeLocale ? 'black' : 'red'}`, cursor: 'pointer'}}>
           <div onClick={() => changeLocale(LOCALE.gb)}>GB</div>
           <div onClick={() => changeLocale(LOCALE.us)}>US</div>
         </div>

@@ -6,15 +6,17 @@ import {
   useHistory,
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import PageWrapper from './PageWrapper';
-import Home from '../pages/home';
-import RouteNotFound from './RouteNotFound';
-import { GlobalStyle } from './GlobalStyle';
 import { ThemeProvider } from 'styled-components';
 import { connect } from 'react-redux';
+import RouteNotFound from './RouteNotFound';
+import { GlobalStyle } from './GlobalStyle';
 import theme from '../theme';
 import routes from './routes';
 import { setLocaleAction } from '../actions/AppActions';
+import PageWrapper from './PageWrapper';
+import Home from '../pages/home';
+import Categories from '../pages/categories';
+import Search from '../pages/search';
 
 const AppComponent = props => {
   const { locale } = props;
@@ -33,9 +35,23 @@ const AppComponent = props => {
           <Switch>
             <Route exact path={`/`} component={SetLocale} />
             <Route exact path={routes.home(locale)} component={Home} />
-            <Route exact path={routes.homeArticle(locale)} component={Home} />
-            {/* <Route exact path={routes.categories(locale)} component={Categories} />
-            <Route exact path={routes.search(locale, query)} component={Search} /> */}
+            <Route
+              exact
+              path={routes.homeArticle(locale)}
+              component={Categories}
+            />
+            <Route
+              exact
+              path={routes.categories(locale)}
+              component={Categories}
+            />
+            <Route
+              exact
+              path={routes.categoriesArticle(locale)}
+              component={Home}
+            />
+            <Route exact path={routes.search(locale)} component={Search} />
+            <Route exact path={routes.searchQuery(locale)} component={Search} />
             <Route component={RouteNotFound} />
           </Switch>
         </PageWrapper>
