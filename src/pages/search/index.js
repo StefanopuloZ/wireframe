@@ -11,7 +11,7 @@ import { StyledHome } from './StyledHome';
 import { ARTICLE_CATEGORIES } from '../../enums';
 import routes from '../../App/routes';
 
-const HomeComponent = props => {
+const SearchComponent = props => {
   const {
     fetchSearchTopArticlesAction,
     fetchCategoryArticlesAction,
@@ -24,12 +24,12 @@ const HomeComponent = props => {
 
   let { id } = useParams();
 
-  console.log('id', id);
+  // console.log('id', id);
 
-  useEffect(() => {
-    fetchTopArticlesAction(locale);
-    // history.push(routes.homeArticle(locale, 'asd11'));
-  }, []);
+  // useEffect(() => {
+  //   fetchTopArticlesAction(locale);
+  //   history.push(routes.homeArticle(locale, 'asd11'));
+  // }, []);
 
   // const query = 'trump';
 
@@ -45,7 +45,7 @@ const HomeComponent = props => {
 
   return (
     <StyledHome>
-      <h1>Home page</h1>
+      <h1>Search page</h1>
     </StyledHome>
   );
 };
@@ -63,7 +63,7 @@ const mapDispatchToProps = dispatch => ({
   fetchTopArticlesAction: country => dispatch(fetchTopArticlesAction(country)),
 });
 
-HomeComponent.propTypes = {
+SearchComponent.propTypes = {
   fetchSearchTopArticlesAction: PropTypes.func.isRequired,
   fetchCategoryArticlesAction: PropTypes.func.isRequired,
   fetchTopArticlesAction: PropTypes.func.isRequired,
@@ -71,8 +71,8 @@ HomeComponent.propTypes = {
   articles: PropTypes.array.isRequired,
 };
 
-HomeComponent.defaultProps = {};
+SearchComponent.defaultProps = {};
 
-const Home = connect(mapStateToProps, mapDispatchToProps)(HomeComponent);
+const Search = connect(mapStateToProps, mapDispatchToProps)(SearchComponent);
 
-export default Home;
+export default Search;

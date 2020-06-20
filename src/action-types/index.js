@@ -1,2 +1,2 @@
 export * from './ArticlesActionTypes';
-export * from './TestActionTypes';
+export * from './AppActionTypes';

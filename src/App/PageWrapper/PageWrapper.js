@@ -2,9 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Wrapper } from './PageWrapperStyle';
+import Header from '../../components/Header';
 
 const PageWrapper = props => {
-  return <Wrapper>{props.children}</Wrapper>;
+  return (
+    <Wrapper>
+      <Header />
+      {props.children}
+    </Wrapper>
+  );
 };
 
 PageWrapper.propTypes = {
