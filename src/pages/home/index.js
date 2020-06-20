@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { testAction, testFetchRequest } from '../../actions/TestActions';
 import {
   fetchSearchTopArticlesAction,
   fetchCategoryArticlesAction,
@@ -8,45 +7,44 @@ import {
 } from '../../actions/ArticlesActions';
 import { connect } from 'react-redux';
 import { StyledHome } from './StyledHome';
+import { ARTICLE_CATEGORIES } from '../../enums';
 
 const HomeComponent = props => {
   const {
-    testText,
-    testAction,
-    testFetchRequest,
-    user,
     fetchSearchTopArticlesAction,
     fetchCategoryArticlesAction,
     fetchTopArticlesAction,
+    locale,
   } = props;
 
-  const country = 'us';
-  const query = 'trump';
-  const category = 'sports';
+  // const query = 'trump';
 
-  useEffect(() => {
-    // fetchSearchTopArticlesAction(country, query);
-    // fetchCategoryArticlesAction(country, category);
-    fetchTopArticlesAction(country);
-  }, []);
+  // useEffect(() => {
+  //   fetchSearchTopArticlesAction(locale, query);
+  // }, []);
+
+  // useEffect(() => {
+  //   fetchTopArticlesAction(locale);
+  // }, []);
+
+  // useEffect(() => {
+  //   Object.keys(ARTICLE_CATEGORIES).forEach(category => {
+  //     fetchCategoryArticlesAction(locale, category);
+  //   });
+  // }, []);
 
   return (
     <StyledHome>
       <h1>Home page</h1>
-      <div>{testText}</div>
-      <p>{user}</p>
     </StyledHome>
   );
 };
 
 const mapStateToProps = state => ({
-  testText: state.TestReducer.testText,
-  user: state.TestReducer.user,
+  locale: state.ArticlesReducer.locale,
 });
 
 const mapDispatchToProps = dispatch => ({
-  testAction: text => dispatch(testAction(text)),
-  testFetchRequest: () => dispatch(testFetchRequest()),
   fetchSearchTopArticlesAction: (country, query) =>
     dispatch(fetchSearchTopArticlesAction(country, query)),
   fetchCategoryArticlesAction: (country, category) =>
@@ -55,18 +53,13 @@ const mapDispatchToProps = dispatch => ({
 });
 
 HomeComponent.propTypes = {
-  testText: PropTypes.string,
-  testAction: PropTypes.func.isRequired,
-  testFetchRequest: PropTypes.func.isRequired,
-  user: PropTypes.string.isRequired,
   fetchSearchTopArticlesAction: PropTypes.func.isRequired,
   fetchCategoryArticlesAction: PropTypes.func.isRequired,
   fetchTopArticlesAction: PropTypes.func.isRequired,
+  locale: PropTypes.string.isRequired,
 };
 
-HomeComponent.defaultProps = {
-  testText: 'default prop type',
-};
+HomeComponent.defaultProps = {};
 
 const Home = connect(mapStateToProps, mapDispatchToProps)(HomeComponent);
 

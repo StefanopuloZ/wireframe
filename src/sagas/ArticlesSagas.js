@@ -8,9 +8,9 @@ export const fetchTopArticlesSaga = function* fetchTopArticlesSaga({
   try {
     const result = yield call(NewsApi.getTopArticles, { country });
 
-    console.log('result', result);
+    const articles = result.articles;
 
-    yield put({ type: ActionTypes.FETCH_TOP_ARTICLES_SUCCESS });
+    yield put({ type: ActionTypes.FETCH_TOP_ARTICLES_SUCCESS, articles });
   } catch (e) {
     yield put({ type: ActionTypes.FETCH_TOP_ARTICLES_ERROR });
   }
@@ -26,9 +26,9 @@ export const fetchCategoryArticles = function* fetchCategoryArticles({
       category,
     });
 
-    console.log('result', result);
+    const articles = result.articles;
 
-    yield put({ type: ActionTypes.FETCH_CATEGORY_ARTICLES_SUCCESS });
+    yield put({ type: ActionTypes.FETCH_CATEGORY_ARTICLES_SUCCESS, articles, category });
   } catch (e) {
     yield put({ type: ActionTypes.FETCH_CATEGORY_ARTICLES_ERROR });
   }
@@ -44,9 +44,9 @@ export const searchTopArticlesSaga = function* searchTopArticlesSaga({
       query,
     });
 
-    console.log('result', result);
+    const articles = result.articles;
 
-    yield put({ type: ActionTypes.FETCH_SEARCH_TOP_ARTICLES_SUCCESS });
+    yield put({ type: ActionTypes.FETCH_SEARCH_TOP_ARTICLES_SUCCESS, articles });
   } catch (e) {
     yield put({
       type: ActionTypes.FETCH_SEARCH_TOP_ARTICLES_ERROR,
