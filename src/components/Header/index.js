@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { HeaderWrapper } from './styledHeader';
 import { StyledContainer } from '../StyledContainer';
@@ -9,7 +8,9 @@ import { LOCALE } from '../../enums';
 import { setLocaleAction } from '../../actions/AppActions';
 
 const Header = props => {
-  const { locale, setLocaleAction } = props;
+  const dispatch = useDispatch();
+
+  const locale = useSelector(state => state.AppReducer.locale);
 
   const location = useLocation().pathname;
   const history = useHistory();
@@ -22,7 +23,7 @@ const Header = props => {
       setTimeout(() => {
         history.push(newRoute);
       });
-      setLocaleAction(newLocale);
+      dispatch(setLocaleAction(newLocale));
     }
   };
 
@@ -54,19 +55,8 @@ const Header = props => {
   );
 };
 
-Header.propTypes = {
-  locale: PropTypes.string.isRequired,
-  setLocaleAction: PropTypes.func.isRequired,
-};
+Header.propTypes = {};
 
 Header.defaultProps = {};
 
-const mapStateToProps = state => ({
-  locale: state.AppReducer.locale,
-});
-
-const mapDispatchToProps = dispatch => ({
-  setLocaleAction: locale => dispatch(setLocaleAction(locale)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;

@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Wrapper } from './PageWrapperStyle';
 import Header from '../../components/Header';
@@ -21,8 +20,4 @@ PageWrapper.defaultProps = {
   childrenchildren: {},
 };
 
-const mapStateToProps = state => ({});
-
-const mapDispatchToProps = dispatch => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PageWrapper);
+export default PageWrapper;
