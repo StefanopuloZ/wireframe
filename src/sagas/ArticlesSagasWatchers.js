@@ -9,10 +9,16 @@ const ArticlesWatchers = {
       ArticlesSagas.searchTopArticlesSaga
     );
   },
-  watchFetchCategoryArticlesSagas: function* () {
+  watchFetchCategoryArticlesSaga: function* () {
     yield takeLatest(
       ActionTypes.FETCH_CATEGORY_ARTICLES,
       ArticlesSagas.fetchCategoryArticles
+    );
+  },
+  watchFetchTopArticlesSaga: function* () {
+    yield takeLatest(
+      ActionTypes.FETCH_TOP_ARTICLES,
+      ArticlesSagas.fetchTopArticlesSaga
     );
   },
 };
