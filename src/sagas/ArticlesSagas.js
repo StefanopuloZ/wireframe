@@ -6,18 +6,6 @@ import NewsApi from '../apis/newsApi';
 // const category = 'sports';
 // const query = 'trump';
 
-// export const testSaga = function* testSaga(action) {
-//   try {
-//     const result = yield call(NewsApi.testFetch);
-//     console.log('result', result);
-//     const user = result.articles[0].source.name;
-
-//     yield put({ type: ActionTypes.TEST_FETCH_SUCCEEDED, user: user });
-//   } catch (e) {
-//     yield put({ type: ActionTypes.TEST_FETCH_FAILED, message: e.message });
-//   }
-// };
-
 // /* getTopHeadlines */
 // export const testSaga = function* testSaga(action) {
 //   try {
@@ -32,29 +20,28 @@ import NewsApi from '../apis/newsApi';
 //   }
 // };
 
-// /* getCategoryHeadlines */
-// export const testSaga = function* testSaga(action) {
-//   try {
-//     const result = yield call(NewsApi.getCategoryHeadlines, {
-//       country,
-//       category,
-//     });
-//     console.log('result', result);
-//     // const user = result.articles[0].source.name;
-//     const user = 'qqqqq';
+export const fetchCategoryArticles = function* fetchCategoryArticles({
+  country,
+  category,
+}) {
+  try {
+    const result = yield call(NewsApi.getCategoryArticles, {
+      country,
+      category,
+    });
 
-//     yield put({ type: ActionTypes.TEST_FETCH_SUCCEEDED, user: user });
-//   } catch (e) {
-//     yield put({ type: ActionTypes.TEST_FETCH_FAILED, message: e.message });
-//   }
-// };
+    console.log('result', result);
 
-/* searchTopHeadlines */
+    yield put({ type: ActionTypes.FETCH_CATEGORY_ARTICLES_SUCCESS });
+  } catch (e) {
+    yield put({ type: ActionTypes.FETCH_CATEGORY_ARTICLES_ERROR });
+  }
+};
+
 export const searchTopArticlesSaga = function* searchTopArticlesSaga({
   country,
   query,
 }) {
-  console.log('params: ', country, query);
   try {
     const result = yield call(NewsApi.searchTopArticles, {
       country,

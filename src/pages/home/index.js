@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { testAction, testFetchRequest } from '../../actions/TestActions';
-import { fetchSearchTopArticlesAction } from '../../actions/ArticlesActions';
+import {
+  fetchSearchTopArticlesAction,
+  fetchCategoryArticlesAction,
+} from '../../actions/ArticlesActions';
 import { connect } from 'react-redux';
 import { StyledHome } from './StyledHome';
 
@@ -12,13 +15,16 @@ const HomeComponent = props => {
     testFetchRequest,
     user,
     fetchSearchTopArticlesAction,
+    fetchCategoryArticlesAction,
   } = props;
 
   const country = 'us';
   const query = 'trump';
+  const category = 'sports';
 
   useEffect(() => {
     fetchSearchTopArticlesAction(country, query);
+    fetchCategoryArticlesAction(country, category);
   }, []);
 
   return (
@@ -40,6 +46,8 @@ const mapDispatchToProps = dispatch => ({
   testFetchRequest: () => dispatch(testFetchRequest()),
   fetchSearchTopArticlesAction: (country, query) =>
     dispatch(fetchSearchTopArticlesAction(country, query)),
+  fetchCategoryArticlesAction: (country, category) =>
+    dispatch(fetchCategoryArticlesAction(country, category)),
 });
 
 HomeComponent.propTypes = {
@@ -48,6 +56,7 @@ HomeComponent.propTypes = {
   testFetchRequest: PropTypes.func.isRequired,
   user: PropTypes.string.isRequired,
   fetchSearchTopArticlesAction: PropTypes.func.isRequired,
+  fetchCategoryArticlesAction: PropTypes.func.isRequired,
 };
 
 HomeComponent.defaultProps = {
