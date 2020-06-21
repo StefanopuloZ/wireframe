@@ -33,3 +33,16 @@ export const StyledImage = styled.div`
     max-width: 100%;
   }
 `;
+
+export const StyledBackLink = styled.div`
+  cursor: pointer;
+  margin-top: auto;
+  min-width: 60px;
+  width: max-content;
+  margin-right: auto;
+  transition: all .2s ease;
+
+  &:hover {
+    color: ${colors.linkColor};
+  }
+`;

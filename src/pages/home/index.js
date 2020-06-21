@@ -8,6 +8,7 @@ import ArticlesThumbnails from '../../components/ArticlesThumbnails';
 import { StyledContainer } from '../../components/StyledContainer';
 import Article from '../../components/Article';
 import { articleFunctions } from '../../logic-functions';
+import routes from '../../App/routes';
 
 const Home = props => {
   const dispatch = useDispatch();
@@ -25,15 +26,12 @@ const Home = props => {
 
   if (id && articles.length > 0) {
     article = articleFunctions.getArticle(articles, id);
-    console.log('article', article);
   }
-
-  console.log('art111', article);
 
   return (
     <StyledContainer>
       {id ? (
-        <Article article={article} />
+        <Article article={article} backLink={routes.home(locale)} />
       ) : (
         <StyledHome>
           <h1>Top news from {LOCALE_COUNTRY_NAMES[locale]}</h1>
