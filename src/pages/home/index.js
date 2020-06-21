@@ -7,6 +7,7 @@ import { LOCALE_COUNTRY_NAMES } from '../../enums/Locale';
 import ArticlesThumbnails from '../../components/ArticlesThumbnails';
 import { StyledContainer } from '../../components/StyledContainer';
 import Article from '../../components/Article';
+import { articleFunctions } from '../../logic-functions';
 
 const Home = props => {
   const dispatch = useDispatch();
@@ -14,17 +15,20 @@ const Home = props => {
   const locale = useSelector(state => state.AppReducer.locale);
   const articles = useSelector(state => state.ArticlesReducer.topArticles);
 
+  const { id } = useParams();
+
   let article = {};
 
   useEffect(() => {
     dispatch(fetchTopArticlesAction(locale));
   }, []);
 
-  console.log('articles', articles);
+  if (id && articles.length > 0) {
+    article = articleFunctions.getArticle(articles, id);
+    console.log('article', article);
+  }
 
-  const { id } = useParams();
-
-  console.log('id', id);
+  console.log('art111', article);
 
   return (
     <StyledContainer>

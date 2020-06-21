@@ -1,15 +1,23 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { StyledArticle } from './StyledArticle';
+import { StyledArticle, StyledImage } from './StyledArticle';
 
 const Article = props => {
-  const { article } = props.article;
+  const { article } = props;
 
-  // useEffect(() => {
-  //   dispatch(fetchTopArticlesAction(locale));
-  // }, []);
+  const { title, urlToImage, content, description } = article;
 
-  return <StyledArticle>article</StyledArticle>;
+  console.log('ARTICLE', article);
+
+  return (
+    <StyledArticle>
+      <h1>{title}</h1>
+      <StyledImage>
+        <img src={urlToImage} alt={title} />
+      </StyledImage>
+      <p>{content || description}</p>
+    </StyledArticle>
+  );
 };
 
 Article.propTypes = {
