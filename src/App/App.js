@@ -7,25 +7,27 @@ import {
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { ThemeProvider } from 'styled-components';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import RouteNotFound from './RouteNotFound';
 import { GlobalStyle } from './GlobalStyle';
 import theme from '../theme';
 import routes from './routes';
-import { setLocaleAction } from '../actions/AppActions';
 import PageWrapper from './PageWrapper';
 import Home from '../pages/home';
 import Categories from '../pages/categories';
 import Search from '../pages/search';
 
-const AppComponent = props => {
-  const { locale } = props;
+const SetLocale = () => {
+  const history = useHistory();
 
-  const SetLocale = () => {
-    const history = useHistory();
-    history.push(routes.home(locale));
-    return <></>;
-  };
+  const locale = useSelector(state => state.AppReducer.locale);
+
+  history.push(routes.home(locale));
+  return <></>;
+};
+
+const App = props => {
+  const locale = useSelector(state => state.AppReducer.locale);
 
   return (
     <Router>
@@ -38,7 +40,7 @@ const AppComponent = props => {
             <Route
               exact
               path={routes.homeArticle(locale)}
-              component={Categories}
+              component={Home}
             />
             <Route
               exact
@@ -48,7 +50,7 @@ const AppComponent = props => {
             <Route
               exact
               path={routes.categoriesArticle(locale)}
-              component={Home}
+              component={Categories}
             />
             <Route exact path={routes.search(locale)} component={Search} />
             <Route exact path={routes.searchQuery(locale)} component={Search} />
@@ -60,21 +62,8 @@ const AppComponent = props => {
   );
 };
 
-const mapStateToProps = state => ({
-  locale: state.AppReducer.locale,
-});
+App.propTypes = {};
 
-const mapDispatchToProps = dispatch => ({
-  setLocaleAction: locale => dispatch(setLocaleAction(locale)),
-});
-
-AppComponent.propTypes = {
-  locale: PropTypes.string.isRequired,
-  setLocaleAction: PropTypes.func.isRequired,
-};
-
-AppComponent.defaultProps = {};
-
-const App = connect(mapStateToProps, mapDispatchToProps)(AppComponent);
+App.defaultProps = {};
 
 export default App;
