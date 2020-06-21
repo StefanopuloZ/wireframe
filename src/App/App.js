@@ -40,7 +40,7 @@ const App = props => {
             <Route
               exact
               path={routes.homeArticle(locale)}
-              component={Categories}
+              component={Home}
             />
             <Route
               exact
@@ -50,7 +50,7 @@ const App = props => {
             <Route
               exact
               path={routes.categoriesArticle(locale)}
-              component={Home}
+              component={Categories}
             />
             <Route exact path={routes.search(locale)} component={Search} />
             <Route exact path={routes.searchQuery(locale)} component={Search} />

@@ -1,15 +1,12 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { HeaderWrapper } from './styledHeader';
 import { StyledContainer } from '../StyledContainer';
 import routes from '../../App/routes';
 import { LOCALE } from '../../enums';
-import { setLocaleAction } from '../../actions/AppActions';
 
 const Header = props => {
-  const dispatch = useDispatch();
-
   const locale = useSelector(state => state.AppReducer.locale);
 
   const location = useLocation().pathname;
@@ -20,10 +17,7 @@ const Header = props => {
   const changeLocale = newLocale => {
     if (canChangeLocale) {
       const newRoute = location.replace(`/${locale}`, `/${newLocale}`);
-      setTimeout(() => {
         history.push(newRoute);
-      });
-      dispatch(setLocaleAction(newLocale));
     }
   };
 
@@ -54,9 +48,5 @@ const Header = props => {
     </HeaderWrapper>
   );
 };
-
-Header.propTypes = {};
-
-Header.defaultProps = {};
 
 export default Header;
