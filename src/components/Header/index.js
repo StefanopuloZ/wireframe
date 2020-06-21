@@ -1,17 +1,23 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { Link, useLocation, useHistory } from 'react-router-dom';
-import { HeaderWrapper } from './styledHeader';
+import { useSelector } from 'react-redux';
+import { Link, useLocation, useHistory, useParams } from 'react-router-dom';
+import {
+  StyledLocaleBox,
+  StyledNav,
+  StyledHeader,
+  StyledLocaleButton,
+  StyledLinkItem,
+} from './styledHeader';
 import { StyledContainer } from '../StyledContainer';
 import routes from '../../App/routes';
 import { LOCALE } from '../../enums';
 
 const Header = props => {
-  const { locale } = props;
+  const locale = useSelector(state => state.AppReducer.locale);
 
   const location = useLocation().pathname;
   const history = useHistory();
+  const params = useParams();
 
   const canChangeLocale = !location.includes('article');
 
@@ -23,32 +29,53 @@ const Header = props => {
   };
 
   return (
-    <HeaderWrapper>
-      <StyledContainer>
-        <div>
-          <p><Link to={routes.home(locale)}>Top News</Link></p>
-          <p><Link to={routes.categories(locale)}>Categories</Link></p>
-          <p><Link to={routes.search(locale)}>Search</Link></p>
-        </div>
-        <div style={{color: `${canChangeLocale ? 'black' : 'red'}`, cursor: 'pointer'}}>
-          <div onClick={() => changeLocale(LOCALE.gb)}>GB</div>
-          <div onClick={() => changeLocale(LOCALE.us)}>US</div>
-        </div>
-      </StyledContainer>
-    </HeaderWrapper>
+    <StyledContainer style={{ paddingBottom: 0, paddingTop: 0 }}>
+      <StyledHeader>
+        <StyledNav>
+          <Link to={routes.home(locale)}>
+            <StyledLinkItem
+              selected={
+                location.includes(routes.home(locale)) &&
+                !location.includes(routes.categories(locale)) &&
+                !location.includes(routes.search(locale))
+              }
+            >
+              Top News
+            </StyledLinkItem>
+          </Link>
+          <Link to={routes.categories(locale)}>
+            <StyledLinkItem
+              selected={location.includes(routes.categories(locale))}
+            >
+              Categories
+            </StyledLinkItem>
+          </Link>
+          <Link to={routes.search(locale)}>
+            <StyledLinkItem selected={location.includes(routes.search(locale))}>
+              Search
+            </StyledLinkItem>
+          </Link>
+        </StyledNav>
+        <StyledLocaleBox>
+          <StyledLocaleButton
+            style={{ borderRight: '1px solid gray' }}
+            onClick={() => changeLocale(LOCALE.gb)}
+            selected={LOCALE.gb === locale}
+            disabled={!canChangeLocale}
+          >
+            {LOCALE.gb}
+          </StyledLocaleButton>
+          <StyledLocaleButton
+            selected={LOCALE.us === locale}
+            onClick={() => changeLocale(LOCALE.us)}
+            disabled={!canChangeLocale}
+          >
+            {LOCALE.us}
+          </StyledLocaleButton>
+        </StyledLocaleBox>
+      </StyledHeader>
+    </StyledContainer>
   );
 };
 
-Header.propTypes = {
-  locale: PropTypes.string.isRequired,
-};
-
-Header.defaultProps = {};
-
-const mapStateToProps = state => ({
-  locale: state.AppReducer.locale,
-});
-
-const mapDispatchToProps = dispatch => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;

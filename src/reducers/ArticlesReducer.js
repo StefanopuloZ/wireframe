@@ -1,6 +1,21 @@
 import * as ActionTypes from '../action-types';
 import { LOCALE, ARTICLE_CATEGORIES } from '../enums';
 
+const createId = title => {
+  return title
+    .toLowerCase()
+    .replace(/[^a-zA-Z ]/g, '')
+    .replace(/[ ]/g, '-')
+    .slice(0, 40);
+};
+
+const mapIdsToArticles = articles => {
+  return articles.map(article => {
+    article.id = createId(article.title);
+    return article;
+  });
+};
+
 const categories = Object.keys(ARTICLE_CATEGORIES).map(category => {
   return { [category]: [] };
 });
@@ -15,7 +30,7 @@ const DEFAULT_STATE = {
 const ArticlesReducer = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
     case ActionTypes.FETCH_TOP_ARTICLES_SUCCESS: {
-      const topArticles = action.articles;
+      const topArticles = mapIdsToArticles(action.articles);
 
       return {
         ...state,
