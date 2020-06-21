@@ -1,11 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { Link, useLocation, useHistory, useParams } from 'react-router-dom';
 import {
   StyledLocaleBox,
   StyledNav,
   StyledHeader,
   StyledLocaleButton,
+  StyledLinkItem,
 } from './styledHeader';
 import { StyledContainer } from '../StyledContainer';
 import routes from '../../App/routes';
@@ -16,6 +17,7 @@ const Header = props => {
 
   const location = useLocation().pathname;
   const history = useHistory();
+  const params = useParams();
 
   const canChangeLocale = !location.includes('article');
 
@@ -26,19 +28,27 @@ const Header = props => {
     }
   };
 
+  console.log('params', params, 'location', location);
+
   return (
     <StyledContainer style={{ paddingBottom: 0, paddingTop: 0 }}>
       <StyledHeader>
         <StyledNav>
-          <p>
-            <Link to={routes.home(locale)}>Top News</Link>
-          </p>
-          <p>
-            <Link to={routes.categories(locale)}>Categories</Link>
-          </p>
-          <p>
-            <Link to={routes.search(locale)}>Search</Link>
-          </p>
+          <Link to={routes.home(locale)}>
+            <StyledLinkItem selected={location === routes.home(locale)}>
+              Top News
+            </StyledLinkItem>
+          </Link>
+          <Link to={routes.categories(locale)}>
+            <StyledLinkItem selected={location === routes.categories(locale)}>
+              Categories
+            </StyledLinkItem>
+          </Link>
+          <Link to={routes.search(locale)}>
+            <StyledLinkItem selected={location === routes.search(locale)}>
+              Search
+            </StyledLinkItem>
+          </Link>
         </StyledNav>
         <StyledLocaleBox>
           <StyledLocaleButton

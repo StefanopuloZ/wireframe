@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { boxShadow, colors } from '../../theme';
+import { colors } from '../../theme';
 
 export const StyledHeader = styled.div`
   display: flex;
@@ -21,15 +21,10 @@ export const StyledLocaleBox = styled.div`
   border-top: none;
 `;
 
-export const StyledNav = styled.div`
-  display: flex;
-  border: 1px solid gray;
-  height: 49px;
-`;
-
 export const StyledLocaleButton = styled.div`
   display: flex;
   width: 50px;
+  height: 100%;
   text-transform: uppercase;
   justify-content: center;
   align-items: center;
@@ -42,4 +37,14 @@ export const StyledLocaleButton = styled.div`
     color: ${colors.white};
     background-color: ${props => (props.selected ? 'gray' : colors.teal)};
   }
+`;
+
+export const StyledNav = styled.div`
+  display: flex;
+  height: 49px;
+`;
+
+export const StyledLinkItem = styled(StyledLocaleButton)`
+  width: 150px;
+  border-right: 1px solid gray;
 `;
