@@ -1,7 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useLocation, useHistory } from 'react-router-dom';
-import { HeaderWrapper } from './styledHeader';
+import {
+  StyledLocaleBox,
+  StyledNav,
+  StyledHeader,
+  StyledLocaleButton,
+} from './styledHeader';
 import { StyledContainer } from '../StyledContainer';
 import routes from '../../App/routes';
 import { LOCALE } from '../../enums';
@@ -17,14 +22,14 @@ const Header = props => {
   const changeLocale = newLocale => {
     if (canChangeLocale) {
       const newRoute = location.replace(`/${locale}`, `/${newLocale}`);
-        history.push(newRoute);
+      history.push(newRoute);
     }
   };
 
   return (
-    <HeaderWrapper>
-      <StyledContainer>
-        <div>
+    <StyledContainer style={{ paddingBottom: 0, paddingTop: 0 }}>
+      <StyledHeader>
+        <StyledNav>
           <p>
             <Link to={routes.home(locale)}>Top News</Link>
           </p>
@@ -34,18 +39,24 @@ const Header = props => {
           <p>
             <Link to={routes.search(locale)}>Search</Link>
           </p>
-        </div>
-        <div
-          style={{
-            color: `${canChangeLocale ? 'black' : 'red'}`,
-            cursor: 'pointer',
-          }}
-        >
-          <div onClick={() => changeLocale(LOCALE.gb)}>GB</div>
-          <div onClick={() => changeLocale(LOCALE.us)}>US</div>
-        </div>
-      </StyledContainer>
-    </HeaderWrapper>
+        </StyledNav>
+        <StyledLocaleBox>
+          <StyledLocaleButton
+            style={{ borderRight: '1px solid gray' }}
+            onClick={() => changeLocale(LOCALE.gb)}
+            selected={LOCALE.gb === locale}
+          >
+            {LOCALE.gb}
+          </StyledLocaleButton>
+          <StyledLocaleButton
+            selected={LOCALE.us === locale}
+            onClick={() => changeLocale(LOCALE.us)}
+          >
+            {LOCALE.us}
+          </StyledLocaleButton>
+        </StyledLocaleBox>
+      </StyledHeader>
+    </StyledContainer>
   );
 };
 

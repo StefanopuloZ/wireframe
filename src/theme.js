@@ -2,6 +2,7 @@ export const colors = {
   black: '#252525',
   white: '#fff',
   linkColor: '#0051B5',
+  teal: '#5EEDE8',
 };
 
 export const boxShadow = {

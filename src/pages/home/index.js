@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { StyledHome } from './StyledHome';
 import { LOCALE_COUNTRY_NAMES } from '../../enums/Locale';
 import ArticlesThumbnails from '../../components/ArticlesThumbnails';
+import { StyledContainer } from '../../components/StyledContainer';
 
 const Home = props => {
   const dispatch = useDispatch();
@@ -25,10 +26,12 @@ const Home = props => {
   // console.log('id', id);
 
   return (
-    <StyledHome>
-      <h1>Top news from {LOCALE_COUNTRY_NAMES[locale]}</h1>
-      <ArticlesThumbnails articles={articles} locale={locale} />
-    </StyledHome>
+    <StyledContainer>
+      <StyledHome>
+        <h1>Top news from {LOCALE_COUNTRY_NAMES[locale]}</h1>
+        <ArticlesThumbnails articles={articles} locale={locale} />
+      </StyledHome>
+    </StyledContainer>
   );
 };
 
