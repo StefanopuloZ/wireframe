@@ -41,7 +41,7 @@ export const StyledLocaleButton = styled.div`
   cursor: pointer;
   background-color: ${props => (props.selected ? 'gray' : 'none')};
   color: ${props => (props.selected ? colors.white : colors.black)};
-  opacity: ${props => (props.disabled ? '0.7' : '1')};
+  opacity: ${props => (props.disabled ? '0.5' : '1')};
   transition: all ease 0.2s;
 
   &:hover {
