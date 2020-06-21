@@ -28,8 +28,6 @@ const Header = props => {
     }
   };
 
-  console.log('params', params, 'location', location);
-
   return (
     <StyledContainer style={{ paddingBottom: 0, paddingTop: 0 }}>
       <StyledHeader>
@@ -63,12 +61,14 @@ const Header = props => {
             style={{ borderRight: '1px solid gray' }}
             onClick={() => changeLocale(LOCALE.gb)}
             selected={LOCALE.gb === locale}
+            disabled={!canChangeLocale}
           >
             {LOCALE.gb}
           </StyledLocaleButton>
           <StyledLocaleButton
             selected={LOCALE.us === locale}
             onClick={() => changeLocale(LOCALE.us)}
+            disabled={!canChangeLocale}
           >
             {LOCALE.us}
           </StyledLocaleButton>

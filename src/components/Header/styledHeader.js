@@ -1,6 +1,16 @@
 import styled from 'styled-components';
 import { colors } from '../../theme';
 
+const getHoverColor = (disabled = false, selected = false) => {
+  if (selected) {
+    return colors.white;
+  } else if (disabled) {
+    return colors.black;
+  } else {
+    return colors.white;
+  }
+};
+
 export const StyledHeader = styled.div`
   display: flex;
   border: 1px solid gray;
@@ -31,11 +41,13 @@ export const StyledLocaleButton = styled.div`
   cursor: pointer;
   background-color: ${props => (props.selected ? 'gray' : 'none')};
   color: ${props => (props.selected ? colors.white : colors.black)};
+  opacity: ${props => (props.disabled ? '0.7' : '1')};
   transition: all ease 0.2s;
 
   &:hover {
-    color: ${colors.white};
-    background-color: ${props => (props.selected ? 'gray' : colors.teal)};
+    color: ${props => getHoverColor(props.disabled, props.selected)};
+    background-color: ${props =>
+      props.selected ? 'gray' : props.disabled ? 'none' : colors.teal};
   }
 `;
 
