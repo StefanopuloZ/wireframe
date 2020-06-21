@@ -1,8 +1,15 @@
 import styled from 'styled-components';
-import { boxShadow } from '../../theme';
 
 export const StyledHome = styled.div`
-  box-shadow: ${boxShadow.standard};
+  border: 1px solid gray;
   margin: 10px;
   padding: 10px;
+
+  h1 {
+    text-align: start;
+    font-weight: bold;
+    font-size: 28px;
+    margin-left: 10px;
+    padding-bottom: 10px;
+  }
 `;
