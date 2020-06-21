@@ -6,6 +6,7 @@ import { StyledHome } from './StyledHome';
 import { LOCALE_COUNTRY_NAMES } from '../../enums/Locale';
 import ArticlesThumbnails from '../../components/ArticlesThumbnails';
 import { StyledContainer } from '../../components/StyledContainer';
+import Article from '../../components/Article';
 
 const Home = props => {
   const dispatch = useDispatch();
@@ -13,24 +14,28 @@ const Home = props => {
   const locale = useSelector(state => state.AppReducer.locale);
   const articles = useSelector(state => state.ArticlesReducer.topArticles);
 
+  let article = {};
+
   useEffect(() => {
     dispatch(fetchTopArticlesAction(locale));
   }, []);
 
   console.log('articles', articles);
 
-  // const history = useHistory();
+  const { id } = useParams();
 
-  // let { id } = useParams();
-
-  // console.log('id', id);
+  console.log('id', id);
 
   return (
     <StyledContainer>
-      <StyledHome>
-        <h1>Top news from {LOCALE_COUNTRY_NAMES[locale]}</h1>
-        <ArticlesThumbnails articles={articles} locale={locale} />
-      </StyledHome>
+      {id ? (
+        <Article article={article} />
+      ) : (
+        <StyledHome>
+          <h1>Top news from {LOCALE_COUNTRY_NAMES[locale]}</h1>
+          <ArticlesThumbnails articles={articles} locale={locale} />
+        </StyledHome>
+      )}
     </StyledContainer>
   );
 };
