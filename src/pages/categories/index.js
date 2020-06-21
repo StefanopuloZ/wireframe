@@ -1,77 +1,48 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useParams, useHistory } from 'react-router-dom';
-import {
-  fetchSearchTopArticlesAction,
-  fetchCategoryArticlesAction,
-  fetchTopArticlesAction,
-} from '../../actions/ArticlesActions';
-import { connect } from 'react-redux';
-import { StyledHome } from './StyledHome';
-import { ARTICLE_CATEGORIES } from '../../enums';
+import { fetchTopArticlesAction } from '../../actions/ArticlesActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { StyledCategories } from './StyledCategories';
+import { LOCALE } from '../../enums/Locale';
+import ArticlesThumbnails from '../../components/ArticlesThumbnails';
+import { StyledContainer } from '../../components/StyledContainer';
+import Article from '../../components/Article';
+import { articleFunctions } from '../../logic-functions';
 import routes from '../../App/routes';
 
-const CategoriesComponent = props => {
-  const {
-    fetchSearchTopArticlesAction,
-    fetchCategoryArticlesAction,
-    fetchTopArticlesAction,
-    articles,
-    locale,
-  } = props;
+const Categories = props => {
+  const dispatch = useDispatch();
 
-  const history = useHistory();
+  const locale = useSelector(state => state.AppReducer.locale);
+  const articles = useSelector(state => state.ArticlesReducer.topArticles);
 
-  // let { id } = useParams();
+  const { id } = useParams();
 
-  // console.log('id', id);
+  let article = {};
 
-  // useEffect(() => {
-  //   fetchTopArticlesAction(locale);
-  // }, []);
+  useEffect(() => {
+    dispatch(fetchTopArticlesAction(locale));
+  }, []);
 
-  // const query = 'trump';
-
-  // useEffect(() => {
-  //   fetchSearchTopArticlesAction(locale, query);
-  // }, []);
-
-  // useEffect(() => {
-  //   Object.keys(ARTICLE_CATEGORIES).forEach(category => {
-  //     fetchCategoryArticlesAction(locale, category);
-  //   });
-  // }, []);
+  if (id && articles.length > 0) {
+    article = articleFunctions.getArticle(articles, id);
+  }
 
   return (
-    <StyledHome>
-      <h1>Categories</h1>
-    </StyledHome>
+    <StyledContainer>
+      {id ? (
+        <Article article={article} backLink={routes.categories(locale)} />
+      ) : (
+        <StyledCategories>
+          <h1>
+            Top 5 news by categories from{' '}
+            <span style={{ textTransform: 'uppercase' }}>{LOCALE[locale]}</span>
+          </h1>
+          <ArticlesThumbnails articles={articles} locale={locale} />
+        </StyledCategories>
+      )}
+    </StyledContainer>
   );
 };
-
-const mapStateToProps = state => ({
-  locale: state.AppReducer.locale,
-  articles: state.ArticlesReducer.topArticles,
-});
-
-const mapDispatchToProps = dispatch => ({
-  fetchSearchTopArticlesAction: (country, query) =>
-    dispatch(fetchSearchTopArticlesAction(country, query)),
-  fetchCategoryArticlesAction: (country, category) =>
-    dispatch(fetchCategoryArticlesAction(country, category)),
-  fetchTopArticlesAction: country => dispatch(fetchTopArticlesAction(country)),
-});
-
-CategoriesComponent.propTypes = {
-  fetchSearchTopArticlesAction: PropTypes.func.isRequired,
-  fetchCategoryArticlesAction: PropTypes.func.isRequired,
-  fetchTopArticlesAction: PropTypes.func.isRequired,
-  locale: PropTypes.string.isRequired,
-  articles: PropTypes.array.isRequired,
-};
-
-CategoriesComponent.defaultProps = {};
-
-const Categories = connect(mapStateToProps, mapDispatchToProps)(CategoriesComponent);
 
 export default Categories;
