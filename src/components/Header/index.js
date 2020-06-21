@@ -35,17 +35,25 @@ const Header = props => {
       <StyledHeader>
         <StyledNav>
           <Link to={routes.home(locale)}>
-            <StyledLinkItem selected={location === routes.home(locale)}>
+            <StyledLinkItem
+              selected={
+                location.includes(routes.home(locale)) &&
+                !location.includes(routes.categories(locale)) &&
+                !location.includes(routes.search(locale))
+              }
+            >
               Top News
             </StyledLinkItem>
           </Link>
           <Link to={routes.categories(locale)}>
-            <StyledLinkItem selected={location === routes.categories(locale)}>
+            <StyledLinkItem
+              selected={location.includes(routes.categories(locale))}
+            >
               Categories
             </StyledLinkItem>
           </Link>
           <Link to={routes.search(locale)}>
-            <StyledLinkItem selected={location === routes.search(locale)}>
+            <StyledLinkItem selected={location.includes(routes.search(locale))}>
               Search
             </StyledLinkItem>
           </Link>

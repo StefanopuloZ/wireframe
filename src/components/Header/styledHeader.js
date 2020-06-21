@@ -42,6 +42,7 @@ export const StyledLocaleButton = styled.div`
 export const StyledNav = styled.div`
   display: flex;
   height: 49px;
+  border-bottom: 1px solid gray;
 `;
 
 export const StyledLinkItem = styled(StyledLocaleButton)`

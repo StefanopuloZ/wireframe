@@ -5,7 +5,6 @@ import {
   Route,
   useHistory,
 } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { ThemeProvider } from 'styled-components';
 import { useSelector } from 'react-redux';
 import RouteNotFound from './RouteNotFound';
@@ -61,9 +60,5 @@ const App = props => {
     </Router>
   );
 };
-
-App.propTypes = {};
-
-App.defaultProps = {};
 
 export default App;
