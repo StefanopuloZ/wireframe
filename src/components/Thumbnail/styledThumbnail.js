@@ -33,7 +33,7 @@ export const StyledThumbnail = styled.div`
 
 export const StyledThumbImage = styled.div`
   width: 100%;
-  height: 200px;
+  height: 150px;
   min-height: 50%;
   display: flex;
   border-radius: ${borderRadius.standard};

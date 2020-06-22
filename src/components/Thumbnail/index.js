@@ -9,8 +9,10 @@ const Thumbnail = props => {
 
   const { urlToImage, description, title, id } = article;
 
+  const Wrapper = StyledThumbnailWrapper;
+
   return (
-    <StyledThumbnailWrapper>
+    <Wrapper>
       <StyledThumbnail>
         <h3>{title}</h3>
         <StyledThumbImage>
@@ -21,7 +23,7 @@ const Thumbnail = props => {
           <Link to={routes.homeArticle(locale, id)}>More &gt;&gt;&gt;</Link>
         </StyledMoreLink>
       </StyledThumbnail>
-    </StyledThumbnailWrapper>
+    </Wrapper>
   );
 };
 

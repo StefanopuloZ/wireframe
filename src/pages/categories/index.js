@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { fetchTopArticlesAction } from '../../actions/ArticlesActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { StyledCategories } from './StyledCategories';
 import { LOCALE } from '../../enums/Locale';
-import ArticlesThumbnails from '../../components/ArticlesThumbnails';
+import ArticlesCarousel from '../../components/ArticlesCarousel';
 import { StyledContainer } from '../../components/StyledContainer';
 import Article from '../../components/Article';
 import { articleFunctions } from '../../logic-functions';
@@ -35,10 +35,10 @@ const Categories = props => {
       ) : (
         <StyledCategories>
           <h1>
-            Top 5 news by categories from{' '}
+            Category name:
             <span style={{ textTransform: 'uppercase' }}>{LOCALE[locale]}</span>
           </h1>
-          <ArticlesThumbnails articles={articles} locale={locale} />
+          <ArticlesCarousel categoryLink={'#'} categoryName={'Sports'} articles={articles} locale={locale} />
         </StyledCategories>
       )}
     </StyledContainer>
