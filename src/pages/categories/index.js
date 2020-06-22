@@ -20,7 +20,13 @@ const Categories = props => {
   const locale = useSelector(state => state.AppReducer.locale);
   const categories = useSelector(state => state.ArticlesReducer.categories);
 
-  // const { id } = useParams();
+  let { category } = useParams();
+
+  // if (!categories[category]) {
+  //   category = false;
+  // }
+
+  console.log('category', category);
 
   // let article = {};
 
@@ -38,13 +44,13 @@ const Categories = props => {
     const categoriesArray = [];
     for (const categoryName in categories) {
       categoriesArray.push(
-        <StyledCategoryCarousel>
+        <StyledCategoryCarousel key={categoryName}>
           <ArticlesCarousel
             categoryLink={'#'}
             categoryName={categoryName}
             articles={categories[categoryName]}
             locale={locale}
-            key={categoryName}
+            baseRoute={'#'}
           />
         </StyledCategoryCarousel>
       );

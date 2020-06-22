@@ -15,7 +15,7 @@ import {
 import Thumbnail from '../Thumbnail';
 
 const ArticlesCarousel = props => {
-  const { articles, locale, categoryName, categoryLink } = props;
+  const { articles, locale, categoryName, categoryLink, baseRoute } = props;
 
   const topFiveArticles = articles.length > 5 ? articles.slice(0, 4) : articles;
 
@@ -51,7 +51,12 @@ const ArticlesCarousel = props => {
       key={article.id}
       minWidth={isExpanded ? 0 : itemWidth}
     >
-      <Thumbnail locale={locale} key={article.id} article={article} />
+      <Thumbnail
+        locale={locale}
+        key={article.id}
+        article={article}
+        baseRoute={baseRoute}
+      />
     </StyledCarouselThumbnail>
   ));
 
@@ -107,6 +112,7 @@ ArticlesCarousel.propTypes = {
   locale: PropTypes.string.isRequired,
   categoryName: PropTypes.string.isRequired,
   categoryLink: PropTypes.string.isRequired,
+  baseRoute: PropTypes.string.isRequired,
 };
 
 ArticlesCarousel.defaultProps = {

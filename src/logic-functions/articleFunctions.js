@@ -11,8 +11,8 @@ const createId = title => {
 };
 
 const mapIdsToArticles = articles => {
-  return articles.map(article => {
-    article.id = createId(article.title);
+  return articles.map((article, index) => {
+    article.id = createId(article.title) + '-' + index;
     return article;
   });
 };

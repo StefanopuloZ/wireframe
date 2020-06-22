@@ -3,6 +3,10 @@ export default {
   homeArticle: (locale, id) =>
     id ? `/${locale}/article/${id}` : `/${locale}/article/:id`,
   categories: locale => `/${locale}/categories`,
+  categoriesCategory: (locale, category) =>
+    category
+      ? `/${locale}/categories/${category}`
+      : `/${locale}/categories/:category`,
   categoriesArticle: (locale, id) =>
     id
       ? `/${locale}/categories/article/${id}`
