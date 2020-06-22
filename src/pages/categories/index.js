@@ -45,7 +45,7 @@ const Categories = props => {
       categoriesArray.push(
         <StyledCategoryCarousel key={categoryName}>
           <ArticlesCarousel
-            categoryLink={'#'}
+            categoryLink={routes.categoriesCategory(locale, categoryName)}
             categoryName={categoryName}
             articles={categories[categoryName]}
             locale={locale}

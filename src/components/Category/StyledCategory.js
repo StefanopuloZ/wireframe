@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { colors } from '../../theme';
 
 export const StyledCategory = styled.div`
   border: 1px solid gray;
@@ -11,5 +12,18 @@ export const StyledCategory = styled.div`
     font-size: 28px;
     margin-left: 10px;
     padding-bottom: 10px;
+  }
+`;
+
+export const StyledBackLink = styled.div`
+  cursor: pointer;
+  margin: 30px 0;
+  min-width: 60px;
+  width: max-content;
+  margin-right: auto;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: ${colors.linkColor};
   }
 `;
