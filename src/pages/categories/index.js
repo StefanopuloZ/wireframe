@@ -27,8 +27,6 @@ const Categories = props => {
   //   category = false;
   // }
 
-  console.log('category', category);
-
   // let article = {};
 
   // if (id && articles.length > 0) {
@@ -65,7 +63,11 @@ const Categories = props => {
   return (
     <StyledContainer>
       {category ? (
-        <Categories />
+        <Category
+          locale={locale}
+          category={category}
+          articles={categories[category]}
+        />
       ) : (
         <StyledCategories>
           <h1>

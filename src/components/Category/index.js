@@ -1,19 +1,15 @@
 import React from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-import { fetchTopArticlesAction } from '../../actions/ArticlesActions';
+import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { StyledCategory } from './StyledCategory';
+import ArticlesThumbnails from '../ArticlesThumbnails';
+import Article from '../Article';
 import { LOCALE_COUNTRY_NAMES } from '../../enums/Locale';
-import ArticlesThumbnails from '../../components/ArticlesThumbnails';
-import Article from '../../components/Article';
-import { articleFunctions } from '../../logic-functions';
-import routes from '../../App/routes';
+// import routes from '../../App/routes';
 
 const Category = props => {
-  const dispatch = useDispatch();
-
-  const locale = useSelector(state => state.AppReducer.locale);
-  const articles = useSelector(state => state.ArticlesReducer.topArticles);
+  const { category, articles, locale } = props;
 
   const { id } = useParams();
 
@@ -25,7 +21,10 @@ const Category = props => {
 
   return (
     <StyledCategory>
-      category
+      <StyledCategory>
+        <h1>Top {category} from {LOCALE_COUNTRY_NAMES[locale]}</h1>
+        <ArticlesThumbnails baseRoute={'#'} articles={articles} />
+      </StyledCategory>
       {/* {id ? (
         <Article article={article} backLink={routes.home(locale)} />
       ) : (
@@ -39,6 +38,16 @@ const Category = props => {
       )} */}
     </StyledCategory>
   );
+};
+
+Category.propTypes = {
+  category: PropTypes.string.isRequired,
+  articles: PropTypes.array,
+  locale: PropTypes.string.isRequired,
+};
+
+Category.defaultProps = {
+  articles: [],
 };
 
 export default Category;
