@@ -21,7 +21,9 @@ const Categories = props => {
   const locale = useSelector(state => state.AppReducer.locale);
   const categories = useSelector(state => state.ArticlesReducer.categories);
 
-  let { category } = useParams();
+  const { id, category } = useParams();
+
+  console.log('category', category, 'id', id);
 
   // if (!categories[category]) {
   //   category = false;
@@ -49,7 +51,7 @@ const Categories = props => {
             categoryName={categoryName}
             articles={categories[categoryName]}
             locale={locale}
-            baseRoute={'#'}
+            baseRoute={routes.categoriesCategory(locale, categoryName)}
           />
         </StyledCategoryCarousel>
       );
@@ -67,6 +69,7 @@ const Categories = props => {
           locale={locale}
           category={category}
           articles={categories[category]}
+          articleId={id}
         />
       ) : (
         <StyledCategories>
