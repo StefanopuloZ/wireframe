@@ -25,7 +25,12 @@ const Category = props => {
       <StyledCategory>
         {categoryName ? (
           articleId ? (
-            <Article article={article} backLink={routes.categories(locale)} />
+            <Article
+              categoryName={category}
+              categoryLink={routes.categoriesCategory(locale, category)}
+              article={article}
+              backLink={routes.categories(locale)}
+            />
           ) : (
             <>
               <h1>

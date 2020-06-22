@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { boxShadow, colors } from '../../theme';
+import { media, colors } from '../../theme';
 
 export const StyledArticlesCarouselWrapper = styled.div``;
 
@@ -35,7 +35,7 @@ export const StyledExpandCollapse = styled.span`
   width: 30px;
   border-radius: 100%;
   user-select: none;
-  transform: ${props => props.expanded ? 'rotate(90deg)' : 'rotate(-90deg)'};
+  transform: ${props => (props.expanded ? 'rotate(90deg)' : 'rotate(-90deg)')};
   transition: all ease 0.4s;
 `;
 
@@ -48,7 +48,8 @@ export const StyledArrow = styled.div`
   cursor: pointer;
   position: relative;
   z-index: 100;
-  display: ${props => (props.hidden ? 'none' : 'flex')};
+  display: flex;
+  visibility: ${props => (props.hidden ? 'hidden' : 'visible')};
   font-size: 20px;
   font-weight: bold;
   justify-content: center;
@@ -68,10 +69,22 @@ export const StyledItemsWrapper = styled.div`
   position: relative;
   left: ${props => (props.pxPosition ? props.pxPosition + 'px' : '0')};
   transition: all ease 0.5s;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   grid-auto-rows: 1fr;
   grid-column-gap: 5px;
   grid-row-gap: 5px;
+
+  @media ${media.small} {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media ${media.medium} {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media ${media.large} {
+    grid-template-columns: repeat(4, 1fr);
+  }
 `;
 
 export const StyledCarouselThumbnail = styled.div`
