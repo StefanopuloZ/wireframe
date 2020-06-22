@@ -11,6 +11,7 @@ import { LOCALE } from '../../enums/Locale';
 import ArticlesCarousel from '../../components/ArticlesCarousel';
 import { StyledContainer } from '../../components/StyledContainer';
 import Article from '../../components/Article';
+import Category from '../../components/Category';
 import { articleFunctions } from '../../logic-functions';
 import routes from '../../App/routes';
 
@@ -63,13 +64,20 @@ const Categories = props => {
 
   return (
     <StyledContainer>
-      <StyledCategories>
-        <h1>
-          Top 5 news by category from
-          <span style={{ textTransform: 'uppercase' }}> {LOCALE[locale]}:</span>
-        </h1>
-        <StyledCategoriesWrapper>{displayCategories}</StyledCategoriesWrapper>
-      </StyledCategories>
+      {category ? (
+        <Categories />
+      ) : (
+        <StyledCategories>
+          <h1>
+            Top 5 news by category from
+            <span style={{ textTransform: 'uppercase' }}>
+              {' '}
+              {LOCALE[locale]}:
+            </span>
+          </h1>
+          <StyledCategoriesWrapper>{displayCategories}</StyledCategoriesWrapper>
+        </StyledCategories>
+      )}
     </StyledContainer>
   );
 };
