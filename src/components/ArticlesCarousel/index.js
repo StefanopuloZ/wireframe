@@ -17,7 +17,7 @@ import Thumbnail from '../Thumbnail';
 const ArticlesCarousel = props => {
   const { articles, locale, categoryName, categoryLink, baseRoute } = props;
 
-  const topFiveArticles = articles.length > 5 ? articles.slice(0, 4) : articles;
+  const topFiveArticles = articles.length > 5 ? articles.slice(0, 5) : articles;
 
   const maxCarouselPosition = topFiveArticles.length - 1;
   const itemWidth = 350;
