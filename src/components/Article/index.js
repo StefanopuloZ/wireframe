@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { StyledArticle, StyledImage, StyledBackLink } from './StyledArticle';
 
 const Article = props => {
-  const { article, backLink } = props;
+  const { article, backLink, categoryLink, categoryName } = props;
 
   const { title, urlToImage, content, description } = article ? article : {};
 
@@ -24,6 +24,11 @@ const Article = props => {
       <StyledBackLink>
         <Link to={backLink}>&lt; Back to list</Link>
       </StyledBackLink>
+      {categoryLink && (
+        <StyledBackLink>
+          <Link to={categoryLink}>&lt; Back to {categoryName}</Link>
+        </StyledBackLink>
+      )}
     </StyledArticle>
   );
 };
@@ -31,10 +36,14 @@ const Article = props => {
 Article.propTypes = {
   article: PropTypes.object,
   backLink: PropTypes.string.isRequired,
+  categoryLink: PropTypes.string,
+  categoryName: PropTypes.string,
 };
 
 Article.defaultProps = {
   article: null,
+  categoryLink: null,
+  categoryName: '',
 };
 
 export default Article;

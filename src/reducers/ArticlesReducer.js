@@ -1,24 +1,12 @@
 import * as ActionTypes from '../action-types';
 import { LOCALE, ARTICLE_CATEGORIES } from '../enums';
+import { articleFunctions } from '../logic-functions';
 
-const createId = title => {
-  return title
-    .toLowerCase()
-    .replace(/[^a-zA-Z ]/g, '')
-    .replace(/[ ]/g, '-')
-    .slice(0, 40);
-};
+let categories = ARTICLE_CATEGORIES;
 
-const mapIdsToArticles = articles => {
-  return articles.map(article => {
-    article.id = createId(article.title);
-    return article;
-  });
-};
-
-const categories = Object.keys(ARTICLE_CATEGORIES).map(category => {
-  return { [category]: [] };
-});
+for (const categoryName in ARTICLE_CATEGORIES) {
+  categories[categoryName] = [];
+}
 
 const DEFAULT_STATE = {
   locale: LOCALE.us,
@@ -30,7 +18,7 @@ const DEFAULT_STATE = {
 const ArticlesReducer = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
     case ActionTypes.FETCH_TOP_ARTICLES_SUCCESS: {
-      const topArticles = mapIdsToArticles(action.articles);
+      const topArticles = articleFunctions.mapIdsToArticles(action.articles);
 
       return {
         ...state,
@@ -38,9 +26,10 @@ const ArticlesReducer = (state = DEFAULT_STATE, action) => {
       };
     }
     case ActionTypes.FETCH_CATEGORY_ARTICLES_SUCCESS: {
-      const categories = state.categories;
-      categories[action.category] = action.articles;
+      const categories = JSON.parse(JSON.stringify(state.categories));
+      categories[action.category] = articleFunctions.mapIdsToArticles(action.articles);
 
+      
       return {
         ...state,
         categories,

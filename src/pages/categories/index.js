@@ -1,77 +1,90 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { fetchCategoryArticlesAction } from '../../actions/ArticlesActions';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-  fetchSearchTopArticlesAction,
-  fetchCategoryArticlesAction,
-  fetchTopArticlesAction,
-} from '../../actions/ArticlesActions';
-import { connect } from 'react-redux';
-import { StyledHome } from './StyledHome';
-import { ARTICLE_CATEGORIES } from '../../enums';
+  StyledCategories,
+  StyledCategoriesWrapper,
+  StyledCategoryCarousel,
+} from './StyledCategories';
+import { LOCALE } from '../../enums/Locale';
+import ArticlesCarousel from '../../components/ArticlesCarousel';
+import { StyledContainer } from '../../components/StyledContainer';
+import Article from '../../components/Article';
+import Category from '../../components/Category';
+import { articleFunctions } from '../../logic-functions';
 import routes from '../../App/routes';
 
-const CategoriesComponent = props => {
-  const {
-    fetchSearchTopArticlesAction,
-    fetchCategoryArticlesAction,
-    fetchTopArticlesAction,
-    articles,
-    locale,
-  } = props;
+const Categories = props => {
+  const dispatch = useDispatch();
 
-  const history = useHistory();
+  const locale = useSelector(state => state.AppReducer.locale);
+  const categories = useSelector(state => state.ArticlesReducer.categories);
 
-  // let { id } = useParams();
+  const { id, category } = useParams();
 
-  // console.log('id', id);
+  console.log('category', category, 'id', id);
 
-  // useEffect(() => {
-  //   fetchTopArticlesAction(locale);
-  // }, []);
+  // if (!categories[category]) {
+  //   category = false;
+  // }
 
-  // const query = 'trump';
+  // let article = {};
 
-  // useEffect(() => {
-  //   fetchSearchTopArticlesAction(locale, query);
-  // }, []);
+  // if (id && articles.length > 0) {
+  //   article = articleFunctions.getArticle(articles, id);
+  // }
 
-  // useEffect(() => {
-  //   Object.keys(ARTICLE_CATEGORIES).forEach(category => {
-  //     fetchCategoryArticlesAction(locale, category);
-  //   });
-  // }, []);
+  useEffect(() => {
+    for (const categoryName in categories) {
+      dispatch(fetchCategoryArticlesAction(locale, categoryName));
+    }
+  }, []);
+
+  const buildDIsplayCategories = categories => {
+    const categoriesArray = [];
+    for (const categoryName in categories) {
+      categoriesArray.push(
+        <StyledCategoryCarousel key={categoryName}>
+          <ArticlesCarousel
+            categoryLink={routes.categoriesCategory(locale, categoryName)}
+            categoryName={categoryName}
+            articles={categories[categoryName]}
+            locale={locale}
+            baseRoute={routes.categoriesCategory(locale, categoryName)}
+          />
+        </StyledCategoryCarousel>
+      );
+    }
+
+    return categoriesArray;
+  };
+
+  const displayCategories = buildDIsplayCategories(categories);
 
   return (
-    <StyledHome>
-      <h1>Categories</h1>
-    </StyledHome>
+    <StyledContainer>
+      {category ? (
+        <Category
+          locale={locale}
+          category={category}
+          articles={categories[category]}
+          articleId={id}
+        />
+      ) : (
+        <StyledCategories>
+          <h1>
+            Top 5 news by category from
+            <span style={{ textTransform: 'uppercase' }}>
+              {' '}
+              {LOCALE[locale]}:
+            </span>
+          </h1>
+          <StyledCategoriesWrapper>{displayCategories}</StyledCategoriesWrapper>
+        </StyledCategories>
+      )}
+    </StyledContainer>
   );
 };
-
-const mapStateToProps = state => ({
-  locale: state.AppReducer.locale,
-  articles: state.ArticlesReducer.topArticles,
-});
-
-const mapDispatchToProps = dispatch => ({
-  fetchSearchTopArticlesAction: (country, query) =>
-    dispatch(fetchSearchTopArticlesAction(country, query)),
-  fetchCategoryArticlesAction: (country, category) =>
-    dispatch(fetchCategoryArticlesAction(country, category)),
-  fetchTopArticlesAction: country => dispatch(fetchTopArticlesAction(country)),
-});
-
-CategoriesComponent.propTypes = {
-  fetchSearchTopArticlesAction: PropTypes.func.isRequired,
-  fetchCategoryArticlesAction: PropTypes.func.isRequired,
-  fetchTopArticlesAction: PropTypes.func.isRequired,
-  locale: PropTypes.string.isRequired,
-  articles: PropTypes.array.isRequired,
-};
-
-CategoriesComponent.defaultProps = {};
-
-const Categories = connect(mapStateToProps, mapDispatchToProps)(CategoriesComponent);
 
 export default Categories;

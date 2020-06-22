@@ -11,12 +11,12 @@ export const StyledThumbnail = styled.div`
   background-color: ${colors.white};
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 100%;
   padding: 10px;
   text-align: start;
 
   h3 {
-    height: 50px;
+    min-height: 60px;
     font-weight: bold;
   }
 
@@ -33,7 +33,7 @@ export const StyledThumbnail = styled.div`
 
 export const StyledThumbImage = styled.div`
   width: 100%;
-  height: 200px;
+  height: 130px;
   min-height: 50%;
   display: flex;
   border-radius: ${borderRadius.standard};

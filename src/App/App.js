@@ -48,6 +48,11 @@ const App = props => {
             />
             <Route
               exact
+              path={routes.categoriesCategory(locale)}
+              component={Categories}
+            />
+            <Route
+              exact
               path={routes.categoriesArticle(locale)}
               component={Categories}
             />

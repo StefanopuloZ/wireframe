@@ -1,33 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { StyledThumbnail, StyledThumbnailWrapper, StyledThumbImage, StyledMoreLink } from './styledThumbnail';
-import routes from '../../App/routes';
+import {
+  StyledThumbnail,
+  StyledThumbnailWrapper,
+  StyledThumbImage,
+  StyledMoreLink,
+} from './styledThumbnail';
 
 const Thumbnail = props => {
-  const { article, locale } = props;
+  const { article, baseRoute } = props;
 
   const { urlToImage, description, title, id } = article;
 
+  const Wrapper = StyledThumbnailWrapper;
+
   return (
-    <StyledThumbnailWrapper>
+    <Wrapper>
       <StyledThumbnail>
         <h3>{title}</h3>
         <StyledThumbImage>
-            <img src={urlToImage} alt={title} />
+          <img src={urlToImage} alt={title} />
         </StyledThumbImage>
         <span>{description}</span>
         <StyledMoreLink>
-          <Link to={routes.homeArticle(locale, id)}>More &gt;&gt;&gt;</Link>
+          <Link to={`${baseRoute}/article/${id}`}>More &gt;&gt;&gt;</Link>
         </StyledMoreLink>
       </StyledThumbnail>
-    </StyledThumbnailWrapper>
+    </Wrapper>
   );
 };
 
 Thumbnail.propTypes = {
   article: PropTypes.object,
-  locale: PropTypes.string.isRequired,
+  baseRoute: PropTypes.string.isRequired,
 };
 
 Thumbnail.defaultProps = {

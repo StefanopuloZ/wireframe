@@ -37,6 +37,7 @@ export const StyledImage = styled.div`
 export const StyledBackLink = styled.div`
   cursor: pointer;
   margin-top: auto;
+  margin-bottom: 15px;
   min-width: 60px;
   width: max-content;
   margin-right: auto;
