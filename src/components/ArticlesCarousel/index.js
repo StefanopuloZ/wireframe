@@ -14,27 +14,40 @@ import Thumbnail from '../Thumbnail';
 const ArticlesCarousel = props => {
   const { articles, locale } = props;
 
-  const [pxPosition, setpxPosition] = useState(0);
-  const [carouselPosition, setCarouselPosition] = useState(0);
-
   const maxCarouselPosition = articles.length - 1;
+  const itemWidth = 350;
+
+  const [pxPosition, setPxPosition] = useState(0);
+  const [carouselPosition, setCarouselPosition] = useState(0);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const handleArrowClick = direction => {
     let position = pxPosition;
 
     if (direction === 'right') {
-      position -= 350;
+      position -= itemWidth;
       setCarouselPosition(carouselPosition - 1);
     } else if (direction === 'left') {
-      position += 350;
+      position += itemWidth;
       setCarouselPosition(carouselPosition + 1);
     }
 
-    setpxPosition(position);
+    setPxPosition(position);
   };
 
+  const handleExpandClick = () => {
+    setCarouselPosition(0);
+    setPxPosition(0);
+    setIsExpanded(!isExpanded);
+  };
+
+  console.log('isExpanded', isExpanded);
+
   const articlesDisplay = articles.map(article => (
-    <StyledCarouselThumbnail key={article.id}>
+    <StyledCarouselThumbnail
+      key={article.id}
+      minWidth={isExpanded ? 0 : itemWidth}
+    >
       <Thumbnail locale={locale} key={article.id} article={article} />
     </StyledCarouselThumbnail>
   ));
@@ -42,7 +55,9 @@ const ArticlesCarousel = props => {
   return (
     <StyledArticlesCarouselWrapper>
       <h2>Entertainment:</h2>
-      <StyledExpandCollapse>Expand/Colapse</StyledExpandCollapse>
+      <StyledExpandCollapse onClick={handleExpandClick}>
+        Expand/Colapse
+      </StyledExpandCollapse>
       <StyledArticlesCarousel>
         <StyledArrow
           onClick={() => {
@@ -53,11 +68,12 @@ const ArticlesCarousel = props => {
             }
           }}
           disabled={carouselPosition === 0}
+          hidden={isExpanded}
         >
-          Left
+          &lt;
         </StyledArrow>
-        <StyledCarouselWrapper>
-          <StyledItemsWrapper pxPosition={pxPosition}>
+        <StyledCarouselWrapper expanded={isExpanded}>
+          <StyledItemsWrapper pxPosition={pxPosition} expanded={isExpanded}>
             {articlesDisplay}
           </StyledItemsWrapper>
         </StyledCarouselWrapper>
@@ -70,8 +86,9 @@ const ArticlesCarousel = props => {
             }
           }}
           disabled={carouselPosition === maxCarouselPosition}
+          hidden={isExpanded}
         >
-          Right
+          &gt;
         </StyledArrow>
       </StyledArticlesCarousel>
     </StyledArticlesCarouselWrapper>
