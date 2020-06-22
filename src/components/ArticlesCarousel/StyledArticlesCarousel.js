@@ -1,11 +1,42 @@
 import styled from 'styled-components';
-import { boxShadow } from '../../theme';
+import { boxShadow, colors } from '../../theme';
 
 export const StyledArticlesCarouselWrapper = styled.div``;
 
+export const StyledTitleWrapper = styled.div`
+  display: flex;
+  margin-left: 40px;
+`;
+
+export const StyledCategoryLink = styled.h2`
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  text-decoration: underline;
+  margin-right: 30px;
+
+  &:hover {
+    color: ${colors.linkColor};
+    transition: all ease 0.2s;
+  }
+`;
+
 export const StyledExpandCollapse = styled.span`
   cursor: pointer;
-  background-color: green;
+  position: relative;
+  display: flex;
+  font-size: 16px;
+  letter-spacing: -3px;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+  padding-right: 2px;
+  height: 30px;
+  width: 30px;
+  border-radius: 100%;
+  user-select: none;
+  transform: ${props => props.expanded ? 'rotate(90deg)' : 'rotate(-90deg)'};
+  transition: all ease 0.4s;
 `;
 
 export const StyledArticlesCarousel = styled.div`
@@ -29,6 +60,7 @@ export const StyledArrow = styled.div`
   margin: auto;
   border-radius: 100%;
   user-select: none;
+  opacity: ${props => (props.disabled ? '0.5' : '1')};
 `;
 
 export const StyledItemsWrapper = styled.div`
@@ -50,5 +82,5 @@ export const StyledCarouselThumbnail = styled.div`
 export const StyledCarouselWrapper = styled.div`
   flex: 2;
   overflow: hidden;
-  margin-right: ${props => props.expanded ? '0' : '7px'};
+  margin-right: ${props => (props.expanded ? '0' : '7px')};
 `;

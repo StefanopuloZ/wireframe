@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import {
   StyledArticlesCarousel,
   StyledArticlesCarouselWrapper,
@@ -8,13 +9,17 @@ import {
   StyledCarouselThumbnail,
   StyledExpandCollapse,
   StyledCarouselWrapper,
+  StyledTitleWrapper,
+  StyledCategoryLink,
 } from './StyledArticlesCarousel';
 import Thumbnail from '../Thumbnail';
 
 const ArticlesCarousel = props => {
-  const { articles, locale } = props;
+  const { articles, locale, categoryName, categoryLink } = props;
 
-  const maxCarouselPosition = articles.length - 1;
+  const topFiveArticles = articles.length > 5 ? articles.slice(0, 4) : articles;
+
+  const maxCarouselPosition = topFiveArticles.length - 1;
   const itemWidth = 350;
 
   const [pxPosition, setPxPosition] = useState(0);
@@ -26,10 +31,10 @@ const ArticlesCarousel = props => {
 
     if (direction === 'right') {
       position -= itemWidth;
-      setCarouselPosition(carouselPosition - 1);
+      setCarouselPosition(carouselPosition + 1);
     } else if (direction === 'left') {
       position += itemWidth;
-      setCarouselPosition(carouselPosition + 1);
+      setCarouselPosition(carouselPosition - 1);
     }
 
     setPxPosition(position);
@@ -41,9 +46,7 @@ const ArticlesCarousel = props => {
     setIsExpanded(!isExpanded);
   };
 
-  console.log('isExpanded', isExpanded);
-
-  const articlesDisplay = articles.map(article => (
+  const articlesDisplay = topFiveArticles.map(article => (
     <StyledCarouselThumbnail
       key={article.id}
       minWidth={isExpanded ? 0 : itemWidth}
@@ -54,10 +57,14 @@ const ArticlesCarousel = props => {
 
   return (
     <StyledArticlesCarouselWrapper>
-      <h2>Entertainment:</h2>
-      <StyledExpandCollapse onClick={handleExpandClick}>
-        Expand/Colapse
-      </StyledExpandCollapse>
+      <StyledTitleWrapper>
+        <StyledCategoryLink>
+          <Link to={categoryLink}>{categoryName}:</Link>
+        </StyledCategoryLink>
+        <StyledExpandCollapse expanded={isExpanded} onClick={handleExpandClick}>
+          &lt;&lt;
+        </StyledExpandCollapse>
+      </StyledTitleWrapper>
       <StyledArticlesCarousel>
         <StyledArrow
           onClick={() => {
@@ -79,13 +86,13 @@ const ArticlesCarousel = props => {
         </StyledCarouselWrapper>
         <StyledArrow
           onClick={() => {
-            if (carouselPosition === maxCarouselPosition) {
+            if (carouselPosition >= maxCarouselPosition) {
               return;
             } else {
               handleArrowClick('right');
             }
           }}
-          disabled={carouselPosition === maxCarouselPosition}
+          disabled={carouselPosition >= maxCarouselPosition}
           hidden={isExpanded}
         >
           &gt;
@@ -98,6 +105,8 @@ const ArticlesCarousel = props => {
 ArticlesCarousel.propTypes = {
   articles: PropTypes.array,
   locale: PropTypes.string.isRequired,
+  categoryName: PropTypes.string.isRequired,
+  categoryLink: PropTypes.string.isRequired,
 };
 
 ArticlesCarousel.defaultProps = {

@@ -38,7 +38,7 @@ const Categories = props => {
             Category name:
             <span style={{ textTransform: 'uppercase' }}>{LOCALE[locale]}</span>
           </h1>
-          <ArticlesCarousel articles={articles} locale={locale} />
+          <ArticlesCarousel categoryLink={'#'} categoryName={'Sports'} articles={articles} locale={locale} />
         </StyledCategories>
       )}
     </StyledContainer>
