@@ -13,20 +13,25 @@ export const StyledExpandCollapse = styled.span`
 export const StyledArticlesCarousel = styled.div`
   display: flex;
   border: 1px solid red;
+  overflow: hidden;
 `;
 
 export const StyledArrow = styled.div`
   background-color: yellow;
   cursor: pointer;
+  position: relative;
+  z-index: 100;
 `;
 
 export const StyledItemsWrapper = styled.div`
   /* change expand */
   display: flex;
-  flex: 2;
   border: 1px dotted black;
+  position: relative;
+  left: ${props => (props.pxPosition ? props.pxPosition + 'px' : '0')};
+  transition: all ease 0.5s;
   /* change expand */
-  overflow: hidden;
+  /* overflow: hidden; */
   /* change expand */
   /* 
   display: grid;
@@ -40,4 +45,9 @@ export const StyledCarouselThumbnail = styled.div`
   background-color: yellow;
   min-width: 350px; /* change expand */
   display: flex;
+`;
+
+export const StyledCarouselWrapper = styled.div`
+  flex: 2;
+  overflow: hidden;
 `;
