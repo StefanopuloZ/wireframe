@@ -4,10 +4,10 @@ import { StyledArticlesThumbnails } from './styledArticlesThumbnails';
 import Thumbnail from '../Thumbnail';
 
 const ArticlesThumbnails = props => {
-  const { articles, locale } = props;
+  const { articles, baseRoute } = props;
 
   const articlesDisplay = articles.map(article => (
-    <Thumbnail locale={locale} key={article.id} article={article} />
+    <Thumbnail baseRoute={baseRoute} key={article.id} article={article} />
   ));
 
   return <StyledArticlesThumbnails>{articlesDisplay}</StyledArticlesThumbnails>;
@@ -15,7 +15,7 @@ const ArticlesThumbnails = props => {
 
 ArticlesThumbnails.propTypes = {
   articles: PropTypes.array,
-  locale: PropTypes.string.isRequired,
+  baseRoute: PropTypes.string.isRequired,
 };
 
 ArticlesThumbnails.defaultProps = {

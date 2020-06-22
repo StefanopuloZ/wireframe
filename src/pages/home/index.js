@@ -35,7 +35,10 @@ const Home = props => {
       ) : (
         <StyledHome>
           <h1>Top news from {LOCALE_COUNTRY_NAMES[locale]}</h1>
-          <ArticlesThumbnails articles={articles} locale={locale} />
+          <ArticlesThumbnails
+            baseRoute={routes.home(locale)}
+            articles={articles}
+          />
         </StyledHome>
       )}
     </StyledContainer>
