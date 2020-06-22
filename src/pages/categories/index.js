@@ -1,8 +1,12 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchTopArticlesAction } from '../../actions/ArticlesActions';
+import { fetchCategoryArticlesAction } from '../../actions/ArticlesActions';
 import { useDispatch, useSelector } from 'react-redux';
-import { StyledCategories } from './StyledCategories';
+import {
+  StyledCategories,
+  StyledCategoriesWrapper,
+  StyledCategoryCarousel,
+} from './StyledCategories';
 import { LOCALE } from '../../enums/Locale';
 import ArticlesCarousel from '../../components/ArticlesCarousel';
 import { StyledContainer } from '../../components/StyledContainer';
@@ -14,33 +18,52 @@ const Categories = props => {
   const dispatch = useDispatch();
 
   const locale = useSelector(state => state.AppReducer.locale);
-  const articles = useSelector(state => state.ArticlesReducer.topArticles);
+  const categories = useSelector(state => state.ArticlesReducer.categories);
 
-  const { id } = useParams();
+  // const { id } = useParams();
 
-  let article = {};
+  // let article = {};
+
+  // if (id && articles.length > 0) {
+  //   article = articleFunctions.getArticle(articles, id);
+  // }
 
   useEffect(() => {
-    dispatch(fetchTopArticlesAction(locale));
+    for (const categoryName in categories) {
+      dispatch(fetchCategoryArticlesAction(locale, categoryName));
+    }
   }, []);
 
-  if (id && articles.length > 0) {
-    article = articleFunctions.getArticle(articles, id);
-  }
+  const buildDIsplayCategories = categories => {
+    const categoriesArray = [];
+    for (const categoryName in categories) {
+      categoriesArray.push(
+        <StyledCategoryCarousel>
+          <ArticlesCarousel
+            categoryLink={'#'}
+            categoryName={categoryName}
+            articles={categories[categoryName]}
+            locale={locale}
+            key={categoryName}
+          />
+        </StyledCategoryCarousel>
+      );
+    }
+
+    return categoriesArray;
+  };
+
+  const displayCategories = buildDIsplayCategories(categories);
 
   return (
     <StyledContainer>
-      {id ? (
-        <Article article={article} backLink={routes.categories(locale)} />
-      ) : (
-        <StyledCategories>
-          <h1>
-            Category name:
-            <span style={{ textTransform: 'uppercase' }}>{LOCALE[locale]}</span>
-          </h1>
-          <ArticlesCarousel categoryLink={'#'} categoryName={'Sports'} articles={articles} locale={locale} />
-        </StyledCategories>
-      )}
+      <StyledCategories>
+        <h1>
+          Top 5 news by category from
+          <span style={{ textTransform: 'uppercase' }}> {LOCALE[locale]}:</span>
+        </h1>
+        <StyledCategoriesWrapper>{displayCategories}</StyledCategoriesWrapper>
+      </StyledCategories>
     </StyledContainer>
   );
 };
