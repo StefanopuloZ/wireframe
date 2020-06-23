@@ -27,16 +27,17 @@ const ArticlesReducer = (state = DEFAULT_STATE, action) => {
     }
     case ActionTypes.FETCH_CATEGORY_ARTICLES_SUCCESS: {
       const categories = JSON.parse(JSON.stringify(state.categories));
-      categories[action.category] = articleFunctions.mapIdsToArticles(action.articles);
+      categories[action.category] = articleFunctions.mapIdsToArticles(
+        action.articles
+      );
 
-      
       return {
         ...state,
         categories,
       };
     }
     case ActionTypes.FETCH_SEARCH_TOP_ARTICLES_SUCCESS: {
-      const queryArticles = action.articles;
+      const queryArticles = articleFunctions.mapIdsToArticles(action.articles);
 
       return {
         ...state,

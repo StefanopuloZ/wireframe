@@ -1,78 +1,54 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { useParams, useHistory } from 'react-router-dom';
-import {
-  fetchSearchTopArticlesAction,
-  fetchCategoryArticlesAction,
-  fetchTopArticlesAction,
-} from '../../actions/ArticlesActions';
-import { connect } from 'react-redux';
-import { StyledHome } from './StyledHome';
-import { ARTICLE_CATEGORIES } from '../../enums';
+import { useParams, useLocation } from 'react-router-dom';
+import { fetchSearchTopArticlesAction } from '../../actions/ArticlesActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { StyledSearch } from './StyledSearch';
+import { LOCALE_COUNTRY_NAMES } from '../../enums/Locale';
+import ArticlesThumbnails from '../../components/ArticlesThumbnails';
+import { StyledContainer } from '../../components/StyledContainer';
+import Article from '../../components/Article';
+import { articleFunctions } from '../../logic-functions';
 import routes from '../../App/routes';
 
-const SearchComponent = props => {
-  const {
-    fetchSearchTopArticlesAction,
-    fetchCategoryArticlesAction,
-    fetchTopArticlesAction,
-    articles,
-    locale,
-  } = props;
+const Search = props => {
+  const dispatch = useDispatch();
 
-  const history = useHistory();
+  const locale = useSelector(state => state.AppReducer.locale);
+  const articles = useSelector(state => state.ArticlesReducer.queryArticles);
 
-  let { id } = useParams();
+  const { id, term } = useParams();
+  const { search } = useLocation();
 
-  // console.log('id', id);
+  console.log('params:', term, id, 'search: ', search);
 
-  // useEffect(() => {
-  //   fetchTopArticlesAction(locale);
-  //   history.push(routes.homeArticle(locale, 'asd11'));
-  // }, []);
+  let article = {};
 
-  // const query = 'trump';
+  useEffect(() => {
+    if (term || search) {
+      const query = term || search;
+      dispatch(fetchSearchTopArticlesAction(locale, query));
+    }
+  }, []);
 
-  // useEffect(() => {
-  //   fetchSearchTopArticlesAction(locale, query);
-  // }, []);
-
-  // useEffect(() => {
-  //   Object.keys(ARTICLE_CATEGORIES).forEach(category => {
-  //     fetchCategoryArticlesAction(locale, category);
-  //   });
-  // }, []);
+  if (id && articles.length > 0) {
+    article = articleFunctions.getArticle(articles, id);
+  }
 
   return (
-    <StyledHome>
-      <h1>Search page</h1>
-    </StyledHome>
+    <StyledContainer>
+      {id ? (
+        <Article article={article} backLink={routes.search(locale)} />
+      ) : (
+        <StyledSearch>
+          <h1>Top news from {LOCALE_COUNTRY_NAMES[locale]}</h1>
+          <ArticlesThumbnails
+            baseRoute={routes.searchTerm(locale)}
+            articles={articles}
+          />
+        </StyledSearch>
+      )}
+    </StyledContainer>
   );
 };
-
-const mapStateToProps = state => ({
-  locale: state.AppReducer.locale,
-  articles: state.ArticlesReducer.topArticles,
-});
-
-const mapDispatchToProps = dispatch => ({
-  fetchSearchTopArticlesAction: (country, query) =>
-    dispatch(fetchSearchTopArticlesAction(country, query)),
-  fetchCategoryArticlesAction: (country, category) =>
-    dispatch(fetchCategoryArticlesAction(country, category)),
-  fetchTopArticlesAction: country => dispatch(fetchTopArticlesAction(country)),
-});
-
-SearchComponent.propTypes = {
-  fetchSearchTopArticlesAction: PropTypes.func.isRequired,
-  fetchCategoryArticlesAction: PropTypes.func.isRequired,
-  fetchTopArticlesAction: PropTypes.func.isRequired,
-  locale: PropTypes.string.isRequired,
-  articles: PropTypes.array.isRequired,
-};
-
-SearchComponent.defaultProps = {};
-
-const Search = connect(mapStateToProps, mapDispatchToProps)(SearchComponent);
 
 export default Search;
