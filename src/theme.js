@@ -3,6 +3,7 @@ export const colors = {
   white: '#fff',
   linkColor: '#0051B5',
   teal: '#5EEDE8',
+  gray: '#939393',
 };
 
 export const boxShadow = {

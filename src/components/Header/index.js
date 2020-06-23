@@ -1,23 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link, useLocation, useHistory, useParams } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import {
   StyledLocaleBox,
   StyledNav,
   StyledHeader,
   StyledLocaleButton,
   StyledLinkItem,
+  StyledHumburgerIcon,
 } from './styledHeader';
 import { StyledContainer } from '../StyledContainer';
 import routes from '../../App/routes';
 import { LOCALE } from '../../enums';
 
 const Header = props => {
+  const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
+
   const locale = useSelector(state => state.AppReducer.locale);
 
   const location = useLocation().pathname;
   const history = useHistory();
-  const params = useParams();
 
   const canChangeLocale = !location.includes('article');
 
@@ -28,10 +30,18 @@ const Header = props => {
     }
   };
 
+  const handleHamburgerClick = () => {
+    setIsHamburgerOpen(!isHamburgerOpen);
+  };
+
   return (
     <StyledContainer style={{ paddingBottom: 0, paddingTop: 0 }}>
       <StyledHeader>
-        <StyledNav>
+        <StyledHumburgerIcon
+          onClick={handleHamburgerClick}
+          isOpen={isHamburgerOpen}
+        />
+        <StyledNav isOpen={isHamburgerOpen}>
           <Link to={routes.home(locale)}>
             <StyledLinkItem
               selected={
