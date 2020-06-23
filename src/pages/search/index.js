@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useLocation, useHistory } from 'react-router-dom';
+import queryString from 'query-string';
 import {
   fetchSearchTopArticlesAction,
   clearSearchArticles,
@@ -12,7 +13,7 @@ import { StyledContainer } from '../../components/StyledContainer';
 import Article from '../../components/Article';
 import { articleFunctions } from '../../logic-functions';
 import routes from '../../App/routes';
-import queryString from 'query-string';
+import WithLoader from '../../hocs/withLoader';
 
 const Search = props => {
   const dispatch = useDispatch();
@@ -77,16 +78,19 @@ const Search = props => {
               ref={inputField}
             />
           </form>
-
-          {(query || term) && (
-            <ArticlesThumbnails
-              baseRoute={routes.searchTerm(locale, query || term)}
-              articles={articles}
-            />
-          )}
-          {query && articles.length === 0 && (
-            <p>{`No search results for "${query}"`}</p>
-          )}
+          <WithLoader>
+            <>
+              {(query || term) && (
+                <ArticlesThumbnails
+                  baseRoute={routes.searchTerm(locale, query || term)}
+                  articles={articles}
+                />
+              )}
+              {query && articles.length === 0 && (
+                <p>{`No search results for "${query}"`}</p>
+              )}
+            </>
+          </WithLoader>
         </StyledSearch>
       )}
     </StyledContainer>

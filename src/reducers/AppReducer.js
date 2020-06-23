@@ -3,7 +3,7 @@ import { LOCALE } from '../enums';
 
 const DEFAULT_STATE = {
   locale: LOCALE.gb,
-  loader: 0,
+  loaderStatus: 0,
 };
 
 const AppReducer = (state = DEFAULT_STATE, action) => {
@@ -15,6 +15,22 @@ const AppReducer = (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         locale,
+      };
+    }
+    case ActionTypes.INCREMENT_LOADER_STATUS: {
+      const loaderStatus = state.loaderStatus + 1;
+
+      return {
+        ...state,
+        loaderStatus,
+      };
+    }
+    case ActionTypes.DECREMENT_LOADER_STATUS: {
+      const loaderStatus = state.loaderStatus - 1;
+
+      return {
+        ...state,
+        loaderStatus,
       };
     }
     default:

@@ -8,6 +8,7 @@ import { LOCALE_COUNTRY_NAMES } from '../../enums/Locale';
 import { ARTICLE_CATEGORIES } from '../../enums/ArticleCategories';
 import routes from '../../App/routes';
 import { articleFunctions } from '../../logic-functions';
+import WithLoader from '../../hocs/withLoader';
 
 const Category = props => {
   const { category, articles, locale, articleId } = props;
@@ -21,7 +22,7 @@ const Category = props => {
   }
 
   return (
-    <>
+    <WithLoader>
       <StyledCategory>
         {categoryName ? (
           articleId ? (
@@ -49,7 +50,7 @@ const Category = props => {
           <h1>{`Category "${category}" does not exist.`}</h1>
         )}
       </StyledCategory>
-    </>
+    </WithLoader>
   );
 };
 
