@@ -1,78 +1,96 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { useParams, useHistory } from 'react-router-dom';
+import React, { useEffect, useState, useRef } from 'react';
+import { useParams, useLocation, useHistory } from 'react-router-dom';
 import {
   fetchSearchTopArticlesAction,
-  fetchCategoryArticlesAction,
-  fetchTopArticlesAction,
+  clearSearchArticles,
 } from '../../actions/ArticlesActions';
-import { connect } from 'react-redux';
-import { StyledHome } from './StyledHome';
-import { ARTICLE_CATEGORIES } from '../../enums';
+import { useDispatch, useSelector } from 'react-redux';
+import { StyledSearch, StyledSearchInput } from './StyledSearch';
+import { LOCALE_COUNTRY_NAMES } from '../../enums/Locale';
+import ArticlesThumbnails from '../../components/ArticlesThumbnails';
+import { StyledContainer } from '../../components/StyledContainer';
+import Article from '../../components/Article';
+import { articleFunctions } from '../../logic-functions';
 import routes from '../../App/routes';
+import queryString from 'query-string';
 
-const SearchComponent = props => {
-  const {
-    fetchSearchTopArticlesAction,
-    fetchCategoryArticlesAction,
-    fetchTopArticlesAction,
-    articles,
-    locale,
-  } = props;
+const Search = props => {
+  const dispatch = useDispatch();
+
+  const [inputValue, setInputValue] = useState('');
+
+  const inputField = useRef(null);
+
+  const locale = useSelector(state => state.AppReducer.locale);
+  const articles = useSelector(state => state.ArticlesReducer.searchArticles);
+
+  const { id, term } = useParams();
+  const { search } = useLocation();
+  const query = queryString.parse(search).q;
+
+  let article = {};
 
   const history = useHistory();
 
-  let { id } = useParams();
+  useEffect(() => {
+    inputField.current && inputField.current.focus();
 
-  // console.log('id', id);
+    if (term || query) {
+      dispatch(fetchSearchTopArticlesAction(locale, term || query));
+    }
 
-  // useEffect(() => {
-  //   fetchTopArticlesAction(locale);
-  //   history.push(routes.homeArticle(locale, 'asd11'));
-  // }, []);
+    return () => {
+      dispatch(clearSearchArticles());
+    };
+  }, []);
 
-  // const query = 'trump';
+  const handleInputChange = event => {
+    event.preventDefault();
+    setInputValue(event.target.value);
+  };
 
-  // useEffect(() => {
-  //   fetchSearchTopArticlesAction(locale, query);
-  // }, []);
+  const handleSearchSubmit = event => {
+    event.preventDefault();
+    if (inputValue) {
+      dispatch(fetchSearchTopArticlesAction(locale, inputValue));
+      history.push(routes.search(locale, inputValue));
+    }
+  };
 
-  // useEffect(() => {
-  //   Object.keys(ARTICLE_CATEGORIES).forEach(category => {
-  //     fetchCategoryArticlesAction(locale, category);
-  //   });
-  // }, []);
+  if (id && articles.length > 0) {
+    article = articleFunctions.getArticle(articles, id);
+  }
 
   return (
-    <StyledHome>
-      <h1>Search page</h1>
-    </StyledHome>
+    <StyledContainer>
+      {id ? (
+        <Article article={article} backLink={routes.search(locale)} />
+      ) : (
+        <StyledSearch>
+          <h1>Search top new from {LOCALE_COUNTRY_NAMES[locale]} by term:</h1>
+
+          <form onSubmit={handleSearchSubmit}>
+            <StyledSearchInput
+              value={inputValue}
+              placeholder="Search term..."
+              onChange={handleInputChange}
+              ref={inputField}
+            />
+          </form>
+
+          {(query || term) && (
+            <ArticlesThumbnails
+              baseRoute={routes.searchTerm(locale, query || term)}
+              articles={articles}
+            />
+          )}
+          {query && articles.length === 0 && (
+            <p>{`No search results for "${query}"`}</p>
+          )}
+        </StyledSearch>
+      )}
+    </StyledContainer>
   );
 };
-
-const mapStateToProps = state => ({
-  locale: state.AppReducer.locale,
-  articles: state.ArticlesReducer.topArticles,
-});
-
-const mapDispatchToProps = dispatch => ({
-  fetchSearchTopArticlesAction: (country, query) =>
-    dispatch(fetchSearchTopArticlesAction(country, query)),
-  fetchCategoryArticlesAction: (country, category) =>
-    dispatch(fetchCategoryArticlesAction(country, category)),
-  fetchTopArticlesAction: country => dispatch(fetchTopArticlesAction(country)),
-});
-
-SearchComponent.propTypes = {
-  fetchSearchTopArticlesAction: PropTypes.func.isRequired,
-  fetchCategoryArticlesAction: PropTypes.func.isRequired,
-  fetchTopArticlesAction: PropTypes.func.isRequired,
-  locale: PropTypes.string.isRequired,
-  articles: PropTypes.array.isRequired,
-};
-
-SearchComponent.defaultProps = {};
-
-const Search = connect(mapStateToProps, mapDispatchToProps)(SearchComponent);
 
 export default Search;

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { fetchTopArticlesAction } from '../../actions/ArticlesActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { StyledHome } from './StyledHome';

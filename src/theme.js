@@ -14,7 +14,7 @@ export const borderRadius = {
   large: '20px',
 };
 
-const breakpoints = ['680px', '900px', '1200px'];
+const breakpoints = ['600px', '960px', '1280px'];
 
 breakpoints.sm = breakpoints[0];
 

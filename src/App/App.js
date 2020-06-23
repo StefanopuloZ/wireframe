@@ -57,7 +57,7 @@ const App = props => {
               component={Categories}
             />
             <Route exact path={routes.search(locale)} component={Search} />
-            <Route exact path={routes.searchQuery(locale)} component={Search} />
+            <Route exact path={routes.searchArticle(locale)} component={Search} />
             <Route component={RouteNotFound} />
           </Switch>
         </PageWrapper>

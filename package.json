@@ -1,5 +1,5 @@
 {
-  "name": "boilerplate",
+  "name": "wireframe",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -37,6 +37,7 @@
     "postcss-normalize": "7.0.1",
     "postcss-preset-env": "6.7.0",
     "postcss-safe-parser": "4.0.1",
+    "query-string": "^6.13.1",
     "react": "^16.13.1",
     "react-app-polyfill": "^1.0.4",
     "react-dev-utils": "^9.1.0",
