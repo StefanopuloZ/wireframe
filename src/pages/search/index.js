@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useLocation, useHistory } from 'react-router-dom';
 import {
   fetchSearchTopArticlesAction,
   clearSearchArticles,
 } from '../../actions/ArticlesActions';
 import { useDispatch, useSelector } from 'react-redux';
-import { StyledSearch } from './StyledSearch';
+import { StyledSearch, StyledSearchInput } from './StyledSearch';
 import { LOCALE_COUNTRY_NAMES } from '../../enums/Locale';
 import ArticlesThumbnails from '../../components/ArticlesThumbnails';
 import { StyledContainer } from '../../components/StyledContainer';
@@ -19,6 +19,8 @@ const Search = props => {
 
   const [inputValue, setInputValue] = useState('');
 
+  const inputField = useRef(null);
+
   const locale = useSelector(state => state.AppReducer.locale);
   const articles = useSelector(state => state.ArticlesReducer.searchArticles);
 
@@ -26,14 +28,13 @@ const Search = props => {
   const { search } = useLocation();
   const query = queryString.parse(search).q;
 
-  console.log('params:', term, id, 'search: ', search, 'parsed:', query);
-
   let article = {};
 
   const history = useHistory();
 
   useEffect(() => {
-    console.log('yo');
+    inputField.current && inputField.current.focus();
+
     if (term || query) {
       dispatch(fetchSearchTopArticlesAction(locale, term || query));
     }
@@ -50,8 +51,10 @@ const Search = props => {
 
   const handleSearchSubmit = event => {
     event.preventDefault();
-    dispatch(fetchSearchTopArticlesAction(locale, inputValue));
-    history.push(routes.search(locale, inputValue));
+    if (inputValue) {
+      dispatch(fetchSearchTopArticlesAction(locale, inputValue));
+      history.push(routes.search(locale, inputValue));
+    }
   };
 
   if (id && articles.length > 0) {
@@ -67,10 +70,11 @@ const Search = props => {
           <h1>Search top new from {LOCALE_COUNTRY_NAMES[locale]} by term:</h1>
 
           <form onSubmit={handleSearchSubmit}>
-            <input
+            <StyledSearchInput
               value={inputValue}
               placeholder="Search term..."
               onChange={handleInputChange}
+              ref={inputField}
             />
           </form>
 
@@ -79,6 +83,9 @@ const Search = props => {
               baseRoute={routes.searchTerm(locale, query || term)}
               articles={articles}
             />
+          )}
+          {query && articles.length === 0 && (
+            <p>{`No search results for "${query}"`}</p>
           )}
         </StyledSearch>
       )}

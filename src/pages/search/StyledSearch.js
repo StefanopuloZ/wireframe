@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { borderRadius, colors, boxShadow } from '../../theme';
 
 export const StyledSearch = styled.div`
   border: 1px solid gray;
@@ -11,5 +12,19 @@ export const StyledSearch = styled.div`
     font-size: 28px;
     margin-left: 10px;
     padding-bottom: 10px;
+  }
+`;
+
+export const StyledSearchInput = styled.input`
+  padding: 15px 20px;
+  font-size: 20px;
+  border-radius: ${borderRadius.standard};
+  outline: none;
+  border: 1px solid gray;
+  margin: 50px auto;
+  background-color: ${colors.white};
+
+  &:focus {
+    background-color: lightgray;
   }
 `;
