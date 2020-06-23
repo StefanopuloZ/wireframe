@@ -31,7 +31,7 @@ const getCategoryArticles = ({ country, category }) => {
 };
 
 const searchTopArticles = ({ country, query }) => {
-  const path = `https://newsapi.org/v2/top-headlines?country=${country}&${query}&apiKey=${key}`;
+  const path = `https://newsapi.org/v2/top-headlines?country=${country}&q=${query}&apiKey=${key}`;
   const req = new Request(path);
 
   return new Promise((resolve, reject) => {

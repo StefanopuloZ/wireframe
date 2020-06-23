@@ -16,3 +16,7 @@ export const fetchSearchTopArticlesAction = (country, query) => ({
   country,
   query,
 });
+
+export const clearSearchArticles = () => ({
+  type: ACTION_TYPES.FETCH_SEARCH_TOP_ARTICLES,
+});
