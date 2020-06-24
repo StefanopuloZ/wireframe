@@ -12,6 +12,8 @@ import {
 import { StyledContainer } from '../StyledContainer';
 import routes from '../../App/routes';
 import { LOCALE } from '../../enums';
+import Icon from '../Icon';
+import icons from '../Icon/icons';
 
 const Header = props => {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
@@ -40,7 +42,9 @@ const Header = props => {
         <StyledHumburgerIcon
           onClick={handleHamburgerClick}
           isOpen={isHamburgerOpen}
-        />
+        >
+          <Icon icon={isHamburgerOpen ? icons.cross : icons.menu} />
+        </StyledHumburgerIcon>
         <StyledNav isOpen={isHamburgerOpen}>
           <Link to={routes.home(locale)}>
             <StyledLinkItem

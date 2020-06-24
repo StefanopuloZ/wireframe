@@ -35,8 +35,12 @@ export const StyledExpandCollapse = styled.span`
   width: 30px;
   border-radius: 100%;
   user-select: none;
-  transform: ${props => (props.expanded ? 'rotate(90deg)' : 'rotate(-90deg)')};
+  transform: ${props => (props.expanded ? 'rotate(-180deg)' : 'rotate(0deg)')};
   transition: all ease 0.4s;
+
+  svg {
+    transform: scale(0.7);
+  }
 `;
 
 export const StyledArticlesCarousel = styled.div`
@@ -62,6 +66,7 @@ export const StyledArrow = styled.div`
   border-radius: 100%;
   user-select: none;
   opacity: ${props => (props.disabled ? '0.5' : '1')};
+  transform: ${props => (props.left ? 'rotate(90deg)' : 'rotate(-90deg)')};
 `;
 
 export const StyledItemsWrapper = styled.div`

@@ -84,8 +84,11 @@ export const StyledHumburgerIcon = styled.div`
   display: flex;
   min-width: 49px;
   min-height: 49px;
-  background-color: ${colors.gray};
   cursor: pointer;
+
+  svg {
+    transform: scale(0.7);
+  }
 
   @media ${media.small} {
     display: none;
