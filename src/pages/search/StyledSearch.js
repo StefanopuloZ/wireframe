@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import { borderRadius, colors, boxShadow } from '../../theme';
 
 export const StyledSearch = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 100px);
   border: 1px solid gray;
   margin: 0 10px 10px 10px;
   padding: 10px;

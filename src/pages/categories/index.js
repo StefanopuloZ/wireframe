@@ -10,10 +10,9 @@ import {
 import { LOCALE } from '../../enums/Locale';
 import ArticlesCarousel from '../../components/ArticlesCarousel';
 import { StyledContainer } from '../../components/StyledContainer';
-import Article from '../../components/Article';
 import Category from '../../components/Category';
-import { articleFunctions } from '../../logic-functions';
 import routes from '../../App/routes';
+import WithLoader from '../../hocs/withLoader';
 
 const Categories = props => {
   const dispatch = useDispatch();
@@ -22,18 +21,6 @@ const Categories = props => {
   const categories = useSelector(state => state.ArticlesReducer.categories);
 
   const { id, category } = useParams();
-
-  console.log('category', category, 'id', id);
-
-  // if (!categories[category]) {
-  //   category = false;
-  // }
-
-  // let article = {};
-
-  // if (id && articles.length > 0) {
-  //   article = articleFunctions.getArticle(articles, id);
-  // }
 
   useEffect(() => {
     for (const categoryName in categories) {
@@ -76,11 +63,14 @@ const Categories = props => {
           <h1>
             Top 5 news by category from
             <span style={{ textTransform: 'uppercase' }}>
-              {' '}
               {LOCALE[locale]}:
             </span>
           </h1>
-          <StyledCategoriesWrapper>{displayCategories}</StyledCategoriesWrapper>
+          <StyledCategoriesWrapper>
+            <WithLoader>
+              <>{displayCategories}</>
+            </WithLoader>
+          </StyledCategoriesWrapper>
         </StyledCategories>
       )}
     </StyledContainer>

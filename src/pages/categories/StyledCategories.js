@@ -16,6 +16,9 @@ export const StyledCategories = styled.div`
 `;
 
 export const StyledCategoriesWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 100px);
   border: 1px solid ${colors.black};
   border-radius: ${borderRadius.standard};
   padding: 0 10px;
@@ -23,4 +26,4 @@ export const StyledCategoriesWrapper = styled.div`
 
 export const StyledCategoryCarousel = styled.div`
   margin: 50px 0;
-`
+`;
