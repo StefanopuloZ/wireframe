@@ -43,6 +43,7 @@ const Search = props => {
     return () => {
       dispatch(clearSearchArticles());
     };
+    /* eslint-disable-next-line */
   }, []);
 
   const handleInputChange = event => {

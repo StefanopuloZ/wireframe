@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { borderRadius, colors, boxShadow } from '../../theme';
+import { borderRadius, colors } from '../../theme';
 
 export const StyledSearch = styled.div`
   display: flex;

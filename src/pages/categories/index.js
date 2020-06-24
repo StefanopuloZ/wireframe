@@ -26,6 +26,7 @@ const Categories = props => {
     for (const categoryName in categories) {
       dispatch(fetchCategoryArticlesAction(locale, categoryName));
     }
+    /* eslint-disable-next-line */
   }, []);
 
   const buildDIsplayCategories = categories => {
