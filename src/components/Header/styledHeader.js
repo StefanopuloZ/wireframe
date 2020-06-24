@@ -38,7 +38,7 @@ export const StyledLocaleButton = styled.div`
   text-transform: uppercase;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
+  cursor: ${props => (props.disabled ? '' : 'pointer')};
   background-color: ${props => (props.selected ? colors.gray : 'none')};
   color: ${props => (props.selected ? colors.white : colors.black)};
   opacity: ${props => (props.disabled ? '0.5' : '1')};

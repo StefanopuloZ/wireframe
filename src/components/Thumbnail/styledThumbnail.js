@@ -28,6 +28,7 @@ export const StyledThumbnail = styled.div`
 
   span {
     padding: 5px 0;
+    word-break: break-all;
   }
 `;
 

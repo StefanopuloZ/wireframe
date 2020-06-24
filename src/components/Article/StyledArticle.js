@@ -20,6 +20,7 @@ export const StyledArticle = styled.div`
 
   p {
     margin: 20px 0;
+    word-break: break-all;
   }
 `;
 

@@ -15,7 +15,7 @@ const Home = props => {
   const dispatch = useDispatch();
 
   const locale = useSelector(state => state.AppReducer.locale);
-  const articles = useSelector(state => state.ArticlesReducer.topArticles);
+  const articles = useSelector(state => (state.ArticlesReducer.topArticles).slice(0, 17));
 
   const { id } = useParams();
 
