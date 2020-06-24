@@ -10,29 +10,31 @@ const Article = props => {
   const { title, urlToImage, content, description } = article ? article : {};
 
   return (
-    <WithLoader>
-      <StyledArticle>
-        {article && article.id ? (
-          <>
-            <h1>{title}</h1>
-            <StyledImage>
-              <img src={urlToImage} alt={title} />
-            </StyledImage>
-            <p>{content || description}</p>
-          </>
-        ) : (
-          <p>Could not find article</p>
-        )}
-        <StyledBackLink>
-          <Link to={backLink}>&lt; Back to list</Link>
-        </StyledBackLink>
-        {categoryLink && (
+    <StyledArticle>
+      <WithLoader>
+        <>
+          {article && article.id ? (
+            <>
+              <h1>{title}</h1>
+              <StyledImage>
+                <img src={urlToImage} alt={title} />
+              </StyledImage>
+              <p>{content || description}</p>
+            </>
+          ) : (
+            <p>Could not find article</p>
+          )}
           <StyledBackLink>
-            <Link to={categoryLink}>&lt; Back to {categoryName}</Link>
+            <Link to={backLink}>&lt; Back to list</Link>
           </StyledBackLink>
-        )}
-      </StyledArticle>
-    </WithLoader>
+          {categoryLink && (
+            <StyledBackLink>
+              <Link to={categoryLink}>&lt; Back to {categoryName}</Link>
+            </StyledBackLink>
+          )}
+        </>
+      </WithLoader>
+    </StyledArticle>
   );
 };
 

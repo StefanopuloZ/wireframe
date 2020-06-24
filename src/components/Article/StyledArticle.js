@@ -1,7 +1,10 @@
 import styled from 'styled-components';
-import { boxShadow, borderRadius, colors } from '../../theme';
+import { borderRadius, colors } from '../../theme';
 
 export const StyledArticle = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 100px);
   border: 1px solid gray;
   margin: 0 10px 10px 10px;
   padding: 10px;
@@ -41,7 +44,7 @@ export const StyledBackLink = styled.div`
   min-width: 60px;
   width: max-content;
   margin-right: auto;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 
   &:hover {
     color: ${colors.linkColor};

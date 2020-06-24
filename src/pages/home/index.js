@@ -34,15 +34,15 @@ const Home = props => {
       {id ? (
         <Article article={article} backLink={routes.home(locale)} />
       ) : (
-        <WithLoader>
-          <StyledHome>
-            <h1>Top news from {LOCALE_COUNTRY_NAMES[locale]}</h1>
+        <StyledHome>
+          <h1>Top news from {LOCALE_COUNTRY_NAMES[locale]}</h1>
+          <WithLoader>
             <ArticlesThumbnails
               baseRoute={routes.home(locale)}
               articles={articles}
             />
-          </StyledHome>
-        </WithLoader>
+          </WithLoader>
+        </StyledHome>
       )}
     </StyledContainer>
   );

@@ -22,35 +22,37 @@ const Category = props => {
   }
 
   return (
-    <WithLoader>
-      <StyledCategory>
-        {categoryName ? (
-          articleId ? (
-            <Article
-              categoryName={category}
-              categoryLink={routes.categoriesCategory(locale, category)}
-              article={article}
-              backLink={routes.categories(locale)}
-            />
-          ) : (
-            <>
-              <h1>
-                Top {category} news from {LOCALE_COUNTRY_NAMES[locale]}
-              </h1>
-              <ArticlesThumbnails
-                baseRoute={routes.categoriesCategory(locale, category)}
-                articles={articles}
-              />
-              <StyledBackLink>
-                <Link to={routes.categories(locale)}>&lt; Back to list</Link>
-              </StyledBackLink>
-            </>
-          )
+    <StyledCategory>
+      {categoryName ? (
+        articleId ? (
+          <Article
+            categoryName={category}
+            categoryLink={routes.categoriesCategory(locale, category)}
+            article={article}
+            backLink={routes.categories(locale)}
+          />
         ) : (
-          <h1>{`Category "${category}" does not exist.`}</h1>
-        )}
-      </StyledCategory>
-    </WithLoader>
+          <>
+            <h1>
+              Top {category} news from {LOCALE_COUNTRY_NAMES[locale]}
+            </h1>
+            <WithLoader>
+              <>
+                <ArticlesThumbnails
+                  baseRoute={routes.categoriesCategory(locale, category)}
+                  articles={articles}
+                />
+                <StyledBackLink>
+                  <Link to={routes.categories(locale)}>&lt; Back to list</Link>
+                </StyledBackLink>
+              </>
+            </WithLoader>
+          </>
+        )
+      ) : (
+        <h1>{`Category "${category}" does not exist.`}</h1>
+      )}
+    </StyledCategory>
   );
 };
 
