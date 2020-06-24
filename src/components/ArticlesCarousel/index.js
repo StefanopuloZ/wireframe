@@ -69,7 +69,7 @@ const ArticlesCarousel = props => {
           <Link to={categoryLink}>{categoryName}:</Link>
         </StyledCategoryLink>
         <StyledExpandCollapse expanded={isExpanded} onClick={handleExpandClick}>
-          &lt;&lt;
+          <Icon icon={icons.doubleArrow} />
         </StyledExpandCollapse>
       </StyledTitleWrapper>
       <StyledArticlesCarousel>
@@ -103,7 +103,10 @@ const ArticlesCarousel = props => {
           disabled={carouselPosition >= maxCarouselPosition}
           hidden={isExpanded}
         >
-          <Icon icon={icons.arrowDown} disabled={carouselPosition >= maxCarouselPosition} />
+          <Icon
+            icon={icons.arrowDown}
+            disabled={carouselPosition >= maxCarouselPosition}
+          />
         </StyledArrow>
       </StyledArticlesCarousel>
     </StyledArticlesCarouselWrapper>

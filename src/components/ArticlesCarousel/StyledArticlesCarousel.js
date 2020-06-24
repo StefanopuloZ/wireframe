@@ -35,8 +35,12 @@ export const StyledExpandCollapse = styled.span`
   width: 30px;
   border-radius: 100%;
   user-select: none;
-  transform: ${props => (props.expanded ? 'rotate(90deg)' : 'rotate(-90deg)')};
+  transform: ${props => (props.expanded ? 'rotate(-180deg)' : 'rotate(0deg)')};
   transition: all ease 0.4s;
+
+  svg {
+    transform: scale(0.7);
+  }
 `;
 
 export const StyledArticlesCarousel = styled.div`
