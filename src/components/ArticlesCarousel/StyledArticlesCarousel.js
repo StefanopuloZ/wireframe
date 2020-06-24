@@ -62,6 +62,7 @@ export const StyledArrow = styled.div`
   border-radius: 100%;
   user-select: none;
   opacity: ${props => (props.disabled ? '0.5' : '1')};
+  transform: ${props => (props.left ? 'rotate(90deg)' : 'rotate(-90deg)')};
 `;
 
 export const StyledItemsWrapper = styled.div`

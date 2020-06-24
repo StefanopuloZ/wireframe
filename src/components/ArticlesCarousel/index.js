@@ -13,6 +13,8 @@ import {
   StyledCategoryLink,
 } from './StyledArticlesCarousel';
 import Thumbnail from '../Thumbnail';
+import Icon from '../Icon';
+import icons from '../Icon/icons';
 
 const ArticlesCarousel = props => {
   const { articles, locale, categoryName, categoryLink, baseRoute } = props;
@@ -81,8 +83,9 @@ const ArticlesCarousel = props => {
           }}
           disabled={carouselPosition === 0}
           hidden={isExpanded}
+          left={true}
         >
-          &lt;
+          <Icon icon={icons.arrowDown} disabled={carouselPosition === 0} />
         </StyledArrow>
         <StyledCarouselWrapper expanded={isExpanded}>
           <StyledItemsWrapper pxPosition={pxPosition} expanded={isExpanded}>
@@ -100,7 +103,7 @@ const ArticlesCarousel = props => {
           disabled={carouselPosition >= maxCarouselPosition}
           hidden={isExpanded}
         >
-          &gt;
+          <Icon icon={icons.arrowDown} disabled={carouselPosition >= maxCarouselPosition} />
         </StyledArrow>
       </StyledArticlesCarousel>
     </StyledArticlesCarouselWrapper>

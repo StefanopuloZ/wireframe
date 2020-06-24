@@ -86,6 +86,10 @@ export const StyledHumburgerIcon = styled.div`
   min-height: 49px;
   cursor: pointer;
 
+  svg {
+    transform: scale(0.7);
+  }
+
   @media ${media.small} {
     display: none;
   }
