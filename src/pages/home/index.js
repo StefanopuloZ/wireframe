@@ -1,48 +1,52 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { testAction, testFetchRequest } from '../../actions/TestActions';
-import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { fetchTopArticlesAction } from '../../actions/ArticlesActions';
+import { useDispatch, useSelector } from 'react-redux';
 import { StyledHome } from './StyledHome';
+import { LOCALE_COUNTRY_NAMES } from '../../enums/Locale';
+import ArticlesThumbnails from '../../components/ArticlesThumbnails';
+import { StyledContainer } from '../../components/StyledContainer';
+import { articleFunctions } from '../../logic-functions';
+import routes from '../../App/routes';
+import Article from '../../components/Article';
+import WithLoader from '../../hocs/withLoader';
 
-const HomeComponent = props => {
-  const { testText, testAction, testFetchRequest, user } = props;
+const Home = props => {
+  const dispatch = useDispatch();
 
-  testAction('new Text');
+  const locale = useSelector(state => state.AppReducer.locale);
+  const articles = useSelector(state => (state.ArticlesReducer.topArticles).slice(0, 17));
+
+  const { id } = useParams();
+
+  let article = {};
 
   useEffect(() => {
-    testFetchRequest();
+    dispatch(fetchTopArticlesAction(locale));
+    /* eslint-disable-next-line */
   }, []);
 
+  if (id && articles.length > 0) {
+    article = articleFunctions.getArticle(articles, id);
+  }
+
   return (
-    <StyledHome>
-      <h1>Home page</h1>
-      <div>{testText}</div>
-      <p>{user}</p>
-    </StyledHome>
+    <StyledContainer>
+      {id ? (
+        <Article article={article} backLink={routes.home(locale)} />
+      ) : (
+        <StyledHome>
+          <h1>Top news from {LOCALE_COUNTRY_NAMES[locale]}</h1>
+          <WithLoader>
+            <ArticlesThumbnails
+              baseRoute={routes.home(locale)}
+              articles={articles}
+            />
+          </WithLoader>
+        </StyledHome>
+      )}
+    </StyledContainer>
   );
 };
-
-const mapStateToProps = state => ({
-  testText: state.TestReducer.testText,
-  user: state.TestReducer.user,
-});
-
-const mapDispatchToProps = dispatch => ({
-  testAction: text => dispatch(testAction(text)),
-  testFetchRequest: () => dispatch(testFetchRequest()),
-});
-
-HomeComponent.propTypes = {
-  testText: PropTypes.string,
-  testAction: PropTypes.func.isRequired,
-  testFetchRequest: PropTypes.func.isRequired,
-  user: PropTypes.string.isRequired,
-};
-
-HomeComponent.defaultProps = {
-  testText: 'default prop type',
-};
-
-const Home = connect(mapStateToProps, mapDispatchToProps)(HomeComponent);
 
 export default Home;
