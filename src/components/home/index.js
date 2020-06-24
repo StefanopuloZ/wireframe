@@ -6,16 +6,15 @@ import { StyledHome } from './StyledHome';
 import { LOCALE_COUNTRY_NAMES } from '../../enums/Locale';
 import ArticlesThumbnails from '../../components/ArticlesThumbnails';
 import { StyledContainer } from '../../components/StyledContainer';
+import Article from '../../components/Article';
 import { articleFunctions } from '../../logic-functions';
 import routes from '../../App/routes';
-import Article from '../../components/Article';
-import WithLoader from '../../hocs/withLoader';
 
 const Home = props => {
   const dispatch = useDispatch();
 
   const locale = useSelector(state => state.AppReducer.locale);
-  const articles = useSelector(state => (state.ArticlesReducer.topArticles).slice(0, 17));
+  const articles = useSelector(state => state.ArticlesReducer.topArticles);
 
   const { id } = useParams();
 
@@ -37,12 +36,10 @@ const Home = props => {
       ) : (
         <StyledHome>
           <h1>Top news from {LOCALE_COUNTRY_NAMES[locale]}</h1>
-          <WithLoader>
-            <ArticlesThumbnails
-              baseRoute={routes.home(locale)}
-              articles={articles}
-            />
-          </WithLoader>
+          <ArticlesThumbnails
+            baseRoute={routes.home(locale)}
+            articles={articles}
+          />
         </StyledHome>
       )}
     </StyledContainer>
