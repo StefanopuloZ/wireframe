@@ -14,7 +14,7 @@ To run the app use these commands:
 $ npm start # to start the app
 ```
 
-If it's successfull, go to the `localhost:5050` in your browser and you'll be able to see the app
+If it's successfull, go to the `localhost:5050` in your browser and you'll be able to see the app.
 
 
 ## Project:
